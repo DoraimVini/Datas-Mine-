@@ -4,3 +4,8 @@
 .obsidian/cache
 .trash/
 .DS_Store
+
+# Claude Code (local)
+.claude/settings.local.json
+node_modules/
+dist/

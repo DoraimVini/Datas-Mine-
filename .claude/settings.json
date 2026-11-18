@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "game-dev-ia": {
+      "source": {
+        "source": "directory",
+        "path": "C:\\Users\\werne\\OneDrive\\Área de Trabalho\\vini\\obisidian_vaults\\GAME_DEV_AI\\GAME_DEV_AI\\Game_dev_IA"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "harness@game-dev-ia": true
+  }
+}
