@@ -269,8 +269,8 @@ Como o núcleo é determinístico, um **cenário é só uma lista de comandos**.
 | [[0003 - Idioma do jogo - PT-BR\|0003]] | Idioma PT-BR, textos em dados | aceita |
 | [[0004 - Engine e linguagem - Godot 4.7 com GDScript\|0004]] | Godot 4.7 + GDScript, renderizador Compatibility | aceita |
 | [[0005 - Visual scripting híbrido com Orchestrator\|0005]] | Visual scripting híbrido: núcleo em GDScript, apresentação em Orchestrator | aceita |
-| 0006 | Formato do conteúdo (JSON) | **pendente**, depois do caso 1 no papel |
-| 0007 | Núcleo funcional + Command + eventos (seção 4) e framework de testes | **a registrar** no setup do projeto Godot |
+| [[0006 - Formato do conteúdo - JSON por caso\|0006]] | Formato do conteúdo: um JSON por caso + textos em JSON | aceita |
+| [[0007 - Núcleo funcional, comandos e testes próprios\|0007]] | Núcleo funcional com comandos + executor de testes próprio | aceita |
 
 ---
 
@@ -326,5 +326,6 @@ Como o núcleo é determinístico, um **cenário é só uma lista de comandos**.
 - **Fix Your Timestep!** (Glenn Fiedler): https://gafferongames.com/post/fix_your_timestep/
 
 ## Histórico
+- 2026-11-18: **Implementada no protótipo de texto** (`game/`): núcleo em `nucleo/`, aplicação em `app/`, conteúdo do caso 1 em JSON, console em `prototipo_texto/`, 22 testes passando. ADRs 0006 e 0007 aceitas.
 - 2026-11-18: v0.2. Tecnologia definida (ADR 0004: Godot 4.7 + GDScript + Compatibility). Seção 5.4 de mapeamento, implantação e riscos atualizados.
 - 2026-11-18: v0.1. Primeira versão independente da tecnologia (arc42 + C4), escrita antes da ADR 0004 (linguagem).
