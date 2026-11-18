@@ -45,5 +45,8 @@ Conteúdo testado: [[Caso 1 - A Merenda de Vila Serena]]. Relacionado: [[GDD]] �
 | A6 | **Interface:** coletar com um clique e preencher lacunas com um menu do caderno | A coleta texto a texto é repetitiva, e a digitação gera variações |
 | A7 | **Tutorial contextual** do primeiro uso de cada comando (`preencher`, `ocultar`) | A ajuda precisou ser pedida |
 
+## Status dos ajustes (atualizado em 2026-11-18)
+A1 ✅ iscas fortes · A2 ✅ o PIN do tutorial continua fácil · A3 ✅ sondar pelo nome lido · A4 ✅ aviso de rastros · A5 ⏳ (regra de confirmação, no caso 2) · A6 ⏳ (interface com clique e menu) · A7 ✅ `/help` + dicas de primeiro uso.
+
 ## Limitações deste teste
 O jogador é o próprio designer e conhecia o GDD (o conceito, as lacunas e as iscas). Os playtests "às cegas", de 5 a 7 pessoas, continuam necessários no protótipo.
