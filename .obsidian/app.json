@@ -1,0 +1,10 @@
+{
+  "newFileLocation": "folder",
+  "newFileFolderPath": "00 - Inbox",
+  "attachmentFolderPath": "Anexos",
+  "newLinkFormat": "shortest",
+  "useMarkdownLinks": false,
+  "alwaysUpdateLinks": true,
+  "showLineNumber": true,
+  "promptDelete": true
+}
