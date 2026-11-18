@@ -23,6 +23,8 @@ func iniciar(id_caso: String) -> Array:
 
 
 func executar(cmd: Dictionary) -> Array:
+	if estado.is_empty():
+		return [{"tipo": "erro", "codigo": "sem_caso"}]
 	var r := Comandos.aplicar(estado, caso, cmd)
 	estado = r["estado"]
 	historico.append(cmd)

@@ -71,11 +71,12 @@ static func limpar_lacuna(estado: Dictionary, caso: Dictionary, cmd: Dictionary,
 	eventos.append({"tipo": "lacuna_limpa", "fato": cmd["fato"], "lacuna": lacuna})
 
 
-static func ocultar(estado: Dictionary, caso: Dictionary, cmd: Dictionary, eventos: Array) -> void:
+## Acha a pessoa `cmd.nome` num documento do pendrive. Devolve "" (e um erro) se não der.
+static func _pessoa_no_doc(estado: Dictionary, caso: Dictionary, cmd: Dictionary, eventos: Array) -> String:
 	var doc: String = cmd.get("doc", "")
 	if not doc in estado["pendrive"]:
 		eventos.append(Util.erro("doc_fora_do_pendrive", {"doc": doc}))
-		return
+		return ""
 	var pessoas := []
 	for t in caso["documentos"][doc]["termos"]:
 		if caso["termos"][t]["tipo"] == "pessoa":
@@ -83,9 +84,33 @@ static func ocultar(estado: Dictionary, caso: Dictionary, cmd: Dictionary, event
 	var id := Util.achar_termo(caso, pessoas, cmd.get("nome", ""))
 	if id == "":
 		eventos.append(Util.erro("nome_nao_esta_no_doc", {"doc": doc, "nome": cmd.get("nome", "")}))
+	return id
+
+
+static func ocultar(estado: Dictionary, caso: Dictionary, cmd: Dictionary, eventos: Array) -> void:
+	var id := _pessoa_no_doc(estado, caso, cmd, eventos)
+	if id == "":
 		return
+	var doc: String = cmd["doc"]
 	var lista: Array = estado["ocultos"].get(doc, [])
-	if not id in lista:
-		lista.append(id)
+	if id in lista:
+		eventos.append(Util.erro("ja_oculto", {"doc": doc, "termo": id}))
+		return
+	lista.append(id)
 	estado["ocultos"][doc] = lista
 	eventos.append({"tipo": "nome_oculto", "doc": doc, "termo": id})
+
+
+## Desfaz um "ocultar" (o jogador pode ter coberto uma prova por engano).
+static func revelar(estado: Dictionary, caso: Dictionary, cmd: Dictionary, eventos: Array) -> void:
+	var id := _pessoa_no_doc(estado, caso, cmd, eventos)
+	if id == "":
+		return
+	var doc: String = cmd["doc"]
+	var lista: Array = estado["ocultos"].get(doc, [])
+	if not id in lista:
+		eventos.append(Util.erro("nao_oculto", {"doc": doc, "termo": id}))
+		return
+	lista.erase(id)
+	estado["ocultos"][doc] = lista
+	eventos.append({"tipo": "nome_revelado", "doc": doc, "termo": id})

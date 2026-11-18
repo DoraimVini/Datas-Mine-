@@ -31,4 +31,4 @@ func estado() -> Dictionary:
 
 
 func caso() -> Dictionary:
-	return sessao.caso
+	return sessao.caso.duplicate(true)

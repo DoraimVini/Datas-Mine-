@@ -23,24 +23,29 @@ static func normalizar(texto: String) -> String:
 
 
 ## Procura, entre `ids`, o termo cujo rótulo corresponde a `entrada`.
-## Aceita a entrada exata (normalizada) e também sem o prefixo "r" de valores (R$).
+## Aceita a entrada exata (normalizada) e, só para termos do tipo "valor", também sem o "R$".
 static func achar_termo(caso: Dictionary, ids: Array, entrada: String) -> String:
 	var alvo := normalizar(entrada)
 	if alvo.is_empty():
 		return ""
 	for id in ids:
-		var rotulo := normalizar(caso["termos"][id]["rotulo"])
-		if rotulo == alvo or (rotulo.begins_with("r") and rotulo.substr(1) == alvo):
+		var termo: Dictionary = caso["termos"][id]
+		var rotulo := normalizar(termo["rotulo"])
+		if rotulo == alvo:
+			return id
+		if termo["tipo"] == "valor" and rotulo.begins_with("r") and rotulo.substr(1) == alvo:
 			return id
 	return ""
 
 
-## Converte um host ("srv-contratos") ou um id ("n3") no id do nó. "" se não existir.
+## Converte um host ("srv-contratos", sem diferenciar maiúsculas) ou um id ("n3") no id do nó.
+## "" se não existir.
 static func id_do_no(caso: Dictionary, nome: String) -> String:
-	if caso["nos"].has(nome):
-		return nome
+	var alvo := nome.strip_edges().to_lower()
+	if caso["nos"].has(alvo):
+		return alvo
 	for id in caso["nos"]:
-		if caso["nos"][id]["host"] == nome:
+		if str(caso["nos"][id]["host"]).to_lower() == alvo:
 			return id
 	return ""
 

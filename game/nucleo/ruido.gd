@@ -2,13 +2,14 @@
 extends RefCounted
 
 
-## Tenta gastar o custo `chave` (de caso.custos). Se o gasto atingir o orçamento,
-## dispara o lockdown e devolve false: a ação que causou o estouro NÃO acontece.
+## Tenta gastar o custo `chave` (de caso.custos; o validador garante que todas existem).
+## Se o gasto PASSAR do orçamento, dispara o lockdown e devolve false: a ação que causou
+## o estouro NÃO acontece. Chegar exatamente ao orçamento é permitido.
 static func gastar(estado: Dictionary, caso: Dictionary, chave: String, eventos: Array) -> bool:
-	var custo: int = caso["custos"].get(chave, 0)
+	var custo: int = caso["custos"][chave]
 	if custo == 0:
 		return true
-	if estado["ruido"] + custo >= caso["orcamento_ruido"]:
+	if estado["ruido"] + custo > caso["orcamento_ruido"]:
 		lockdown(estado, caso, eventos)
 		return false
 	estado["ruido"] += custo

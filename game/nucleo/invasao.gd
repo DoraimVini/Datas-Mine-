@@ -110,6 +110,9 @@ static func crack(estado: Dictionary, caso: Dictionary, cmd: Dictionary, eventos
 	if estado["nos"][id]["desbloqueado"]:
 		eventos.append(Util.erro("ja_desbloqueado", {"no": id}))
 		return
+	if estado["minigame"].get("no", "") == id:
+		eventos.append(Util.erro("minigame_em_andamento", {"no": id}))
+		return
 	if not Ruido.gastar(estado, caso, "crack", eventos):
 		return
 	estado["nos"][id]["revelado"] = true
@@ -190,6 +193,8 @@ static func limpar(estado: Dictionary, caso: Dictionary, _cmd: Dictionary, event
 
 
 ## Primeira chamada com rastros: só avisa (o jogador decide). Segunda chamada seguida: sai.
+## Ao sair, os nós privados TRANCAM de novo: voltar exige login ou crack outra vez (o GDD diz
+## que voltar à rede tem custo).
 static func disconnect_rede(estado: Dictionary, caso: Dictionary, _cmd: Dictionary, eventos: Array) -> void:
 	if not _exige_conexao(estado, eventos):
 		return
@@ -200,8 +205,10 @@ static func disconnect_rede(estado: Dictionary, caso: Dictionary, _cmd: Dictiona
 		eventos.append({"tipo": "aviso_rastros", "nos": rastros, "exposicao_prevista": ganho})
 		return
 	estado["exposicao"] += ganho
-	for id in rastros:
+	for id in estado["nos"]:
 		estado["nos"][id]["rastro"] = false
+		if not caso["nos"][id]["publico"]:
+			estado["nos"][id]["desbloqueado"] = false
 	estado["conectado"] = false
 	estado["no_atual"] = ""
 	estado["minigame"] = {}

@@ -1,6 +1,9 @@
 # Carrega e valida o conteúdo (JSON). Fica na camada de aplicação porque faz I/O.
 extends RefCounted
 
+const CUSTOS_OBRIGATORIOS := ["scan", "probe", "login", "senha_errada", "crack", "pin_errado", "download", "limpar"]
+const REGRAS_CONHECIDAS := ["prova_documental"]
+
 
 static func carregar_json(caminho: String) -> Dictionary:
 	if not FileAccess.file_exists(caminho):
@@ -30,6 +33,18 @@ static func validar_caso(caso: Dictionary) -> Array:
 	var docs: Dictionary = caso["documentos"]
 	var nos: Dictionary = caso["nos"]
 
+	for chave in CUSTOS_OBRIGATORIOS:
+		if not caso["custos"].has(chave):
+			erros.append("custos: falta '%s'" % chave)
+	for chave in ["sair_com_rastros", "lockdown"]:
+		if not caso["exposicao"].has(chave):
+			erros.append("exposicao: falta '%s'" % chave)
+	if not caso["feedback"] in ["binario", "parcial"]:
+		erros.append("feedback '%s' inválido (use binario ou parcial)" % caso["feedback"])
+	for regra in caso.get("regras_editoriais", []):
+		if not regra in REGRAS_CONHECIDAS:
+			erros.append("regra editorial desconhecida '%s'" % regra)
+
 	if not nos.has(caso["no_inicial"]):
 		erros.append("no_inicial '%s' não existe" % caso["no_inicial"])
 
@@ -58,6 +73,12 @@ static func validar_caso(caso: Dictionary) -> Array:
 					if not acesso.has(k):
 						erros.append("nó %s: pin sem '%s'" % [id, k])
 			_: erros.append("nó %s: tipo de acesso inválido" % id)
+		if acesso.has("porta"):
+			var numeros := []
+			for porta in no["portas"]:
+				numeros.append(int(porta["numero"]))
+			if not int(acesso["porta"]) in numeros:
+				erros.append("nó %s: a porta de acesso %d não está em 'portas'" % [id, int(acesso["porta"])])
 
 	for d in docs:
 		var doc: Dictionary = docs[d]
@@ -69,10 +90,11 @@ static func validar_caso(caso: Dictionary) -> Array:
 				erros.append("documento %s: termo '%s' não existe" % [d, t])
 			elif texto.find("[%s]" % termos[t]["rotulo"]) == -1:
 				erros.append("documento %s: o texto não marca [%s]" % [d, termos[t]["rotulo"]])
-		for lista in ["inocentes", "nomes_prova"]:
-			for t in doc[lista]:
-				if not t in doc["termos"]:
-					erros.append("documento %s: %s '%s' não é termo do documento" % [d, lista, t])
+		for t in doc["inocentes"]:
+			if not t in doc["termos"]:
+				erros.append("documento %s: inocente '%s' não é termo do documento" % [d, t])
+			elif termos.has(t) and termos[t]["tipo"] != "pessoa":
+				erros.append("documento %s: inocente '%s' não é uma pessoa" % [d, t])
 		for n in doc["revela_nos"]:
 			if not nos.has(n):
 				erros.append("documento %s: revela nó inexistente '%s'" % [d, n])

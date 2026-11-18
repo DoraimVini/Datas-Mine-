@@ -8,12 +8,6 @@ const Invasao := preload("res://nucleo/invasao.gd")
 const Dossie := preload("res://nucleo/dossie.gd")
 const Editorial := preload("res://nucleo/editorial.gd")
 
-const TIPOS := [
-	"scan", "probe", "connect", "login", "crack", "pin", "ls", "read", "download", "limpar", "disconnect",
-	"coletar", "preencher", "limpar_lacuna", "ocultar", "entregar",
-]
-
-
 static func aplicar(estado: Dictionary, caso: Dictionary, cmd: Dictionary) -> Dictionary:
 	var novo: Dictionary = estado.duplicate(true)
 	var eventos := []
@@ -43,6 +37,7 @@ static func aplicar(estado: Dictionary, caso: Dictionary, cmd: Dictionary) -> Di
 		"preencher": Dossie.preencher(novo, caso, cmd, eventos)
 		"limpar_lacuna": Dossie.limpar_lacuna(novo, caso, cmd, eventos)
 		"ocultar": Dossie.ocultar(novo, caso, cmd, eventos)
+		"revelar": Dossie.revelar(novo, caso, cmd, eventos)
 		"entregar": Editorial.entregar(novo, caso, cmd, eventos)
 		_: eventos.append(Util.erro("comando_desconhecido", {"comando": tipo}))
 

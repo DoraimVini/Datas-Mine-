@@ -5,16 +5,20 @@ const Util := preload("res://nucleo/util.gd")
 const Dossie := preload("res://nucleo/dossie.gd")
 
 
-## Um documento do pendrive prova o fato se estiver em fato.provas
-## e nenhum dos seus "nomes de prova" tiver sido ocultado.
+## Um documento do pendrive prova o fato se estiver em fato.provas e nenhuma das
+## RESPOSTAS DESTE FATO tiver sido ocultada nele (ocultar quem o fato acusa apaga a prova).
+## Se o caso não tiver a regra "prova_documental", qualquer fato correto basta.
 static func _provado(estado: Dictionary, caso: Dictionary, fato: String) -> bool:
+	if not "prova_documental" in caso["regras_editoriais"]:
+		return true
+	var respostas: Array = caso["fatos"][fato]["respostas"].values()
 	for doc in caso["fatos"][fato]["provas"]:
 		if not doc in estado["pendrive"]:
 			continue
 		var ocultos: Array = estado["ocultos"].get(doc, [])
 		var enfraquecido := false
-		for nome in caso["documentos"][doc]["nomes_prova"]:
-			if nome in ocultos:
+		for nome in ocultos:
+			if nome in respostas:
 				enfraquecido = true
 		if not enfraquecido:
 			return true

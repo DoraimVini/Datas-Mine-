@@ -1,7 +1,10 @@
 {
   "id": "caso1",
   "titulo": "A Merenda de Vila Serena",
-  "jornalista": { "nome": "Marta", "veiculo": "Vila Serena em Pauta" },
+  "jornalista": {
+    "nome": "Marta",
+    "veiculo": "Vila Serena em Pauta"
+  },
   "intro": [
     "Oi. Me passaram teu contato.",
     "As crianças da rede municipal estão comendo bolacha e suco em pó, mas a prefeitura diz que GASTOU MAIS com a merenda este ano.",
@@ -17,10 +20,15 @@
     "crack": 25,
     "pin_errado": 15,
     "download": 15,
-    "limpar": 20
+    "limpar": 10
   },
-  "exposicao": { "sair_com_rastros": 10, "lockdown": 20 },
-  "regras_editoriais": ["prova_documental"],
+  "exposicao": {
+    "sair_com_rastros": 10,
+    "lockdown": 20
+  },
+  "regras_editoriais": [
+    "prova_documental"
+  ],
   "feedback": "binario",
   "no_inicial": "n1",
   "nos": {
@@ -28,36 +36,80 @@
       "host": "portal.vilaserena.gov",
       "descricao": "site da Prefeitura",
       "publico": true,
-      "vizinhos": ["n2"],
-      "portas": [
-        { "numero": 80, "servico": "http", "estado": "aberta" },
-        { "numero": 443, "servico": "https", "estado": "aberta" }
+      "vizinhos": [
+        "n2"
       ],
-      "acesso": { "tipo": "publico" },
-      "arquivos": ["doc1", "doc2"],
+      "portas": [
+        {
+          "numero": 80,
+          "servico": "http",
+          "estado": "aberta"
+        },
+        {
+          "numero": 443,
+          "servico": "https",
+          "estado": "aberta"
+        }
+      ],
+      "acesso": {
+        "tipo": "publico"
+      },
+      "arquivos": [
+        "doc1",
+        "doc2"
+      ],
       "pasta": "/publico/"
     },
     "n2": {
       "host": "gab-educacao-03",
       "descricao": "estação de trabalho · Secretaria de Educação",
       "publico": false,
-      "vizinhos": ["n1", "n3"],
-      "portas": [
-        { "numero": 22, "servico": "login", "estado": "aberta" },
-        { "numero": 3389, "servico": "remoto", "estado": "fechada" }
+      "vizinhos": [
+        "n1",
+        "n3"
       ],
-      "acesso": { "tipo": "login", "porta": 22, "usuario": "lucia.prado", "senha": "pipoca2019" },
-      "arquivos": ["doc3", "doc4"],
+      "portas": [
+        {
+          "numero": 22,
+          "servico": "login",
+          "estado": "aberta"
+        },
+        {
+          "numero": 3389,
+          "servico": "remoto",
+          "estado": "fechada"
+        }
+      ],
+      "acesso": {
+        "tipo": "login",
+        "porta": 22,
+        "usuario": "lucia.prado",
+        "senha": "pipoca2019"
+      },
+      "arquivos": [
+        "doc3",
+        "doc4"
+      ],
       "pasta": "/home/lucia.prado/"
     },
     "n3": {
       "host": "srv-contratos",
       "descricao": "servidor de arquivos · Secretaria de Administração",
       "publico": false,
-      "vizinhos": ["n2"],
+      "vizinhos": [
+        "n2"
+      ],
       "portas": [
-        { "numero": 445, "servico": "arquivos", "estado": "fechada" },
-        { "numero": 80, "servico": "http", "estado": "fechada" }
+        {
+          "numero": 445,
+          "servico": "arquivos",
+          "estado": "fechada"
+        },
+        {
+          "numero": 80,
+          "servico": "http",
+          "estado": "fechada"
+        }
       ],
       "acesso": {
         "tipo": "pin",
@@ -72,31 +124,94 @@
           "• O dígito do meio é ímpar."
         ]
       },
-      "arquivos": ["doc5", "doc6"],
+      "arquivos": [
+        "doc5",
+        "doc6"
+      ],
       "pasta": "/contratos/educacao/2026/"
     }
   },
   "termos": {
-    "antonio_souza": { "rotulo": "Antônio Souza", "tipo": "pessoa" },
-    "nutri_bem": { "rotulo": "Nutri Bem Ltda", "tipo": "empresa" },
-    "lucia_prado": { "rotulo": "Lúcia Prado", "tipo": "pessoa" },
-    "ano_2019": { "rotulo": "2019", "tipo": "data" },
-    "pipoca": { "rotulo": "Pipoca", "tipo": "outro" },
-    "edson_farias": { "rotulo": "Edson Farias", "tipo": "pessoa" },
-    "rogerio": { "rotulo": "Rogério", "tipo": "pessoa" },
-    "cunhado": { "rotulo": "cunhado", "tipo": "parentesco" },
-    "paulo": { "rotulo": "Paulo", "tipo": "pessoa" },
-    "irmao": { "rotulo": "irmão", "tipo": "parentesco" },
-    "srv_contratos": { "rotulo": "srv-contratos", "tipo": "outro" },
-    "data_2025": { "rotulo": "10/01/2025", "tipo": "data" },
-    "nutri_bom": { "rotulo": "Nutri Bom Alimentos", "tipo": "empresa" },
-    "valor_96k": { "rotulo": "R$ 96.000,00", "tipo": "valor" },
-    "data_pagamento": { "rotulo": "14/03/2026", "tipo": "data" },
-    "valor_480k": { "rotulo": "R$ 480.000,00", "tipo": "valor" },
-    "bianca_reis": { "rotulo": "Bianca Reis", "tipo": "pessoa" },
-    "rogerio_souza_lima": { "rotulo": "Rogério Souza Lima", "tipo": "pessoa" },
-    "joana_alves": { "rotulo": "Joana Alves", "tipo": "pessoa" },
-    "carlos_menezes": { "rotulo": "Carlos Menezes", "tipo": "pessoa" }
+    "antonio_souza": {
+      "rotulo": "Antônio Souza",
+      "tipo": "pessoa"
+    },
+    "nutri_bem": {
+      "rotulo": "Nutri Bem Ltda",
+      "tipo": "empresa"
+    },
+    "lucia_prado": {
+      "rotulo": "Lúcia Prado",
+      "tipo": "pessoa"
+    },
+    "ano_2019": {
+      "rotulo": "2019",
+      "tipo": "data"
+    },
+    "pipoca": {
+      "rotulo": "Pipoca",
+      "tipo": "outro"
+    },
+    "edson_farias": {
+      "rotulo": "Edson Farias",
+      "tipo": "pessoa"
+    },
+    "rogerio": {
+      "rotulo": "Rogério",
+      "tipo": "pessoa"
+    },
+    "cunhado": {
+      "rotulo": "cunhado",
+      "tipo": "parentesco"
+    },
+    "paulo": {
+      "rotulo": "Paulo",
+      "tipo": "pessoa"
+    },
+    "irmao": {
+      "rotulo": "irmão",
+      "tipo": "parentesco"
+    },
+    "srv_contratos": {
+      "rotulo": "srv-contratos",
+      "tipo": "outro"
+    },
+    "data_2025": {
+      "rotulo": "10/01/2025",
+      "tipo": "data"
+    },
+    "nutri_bom": {
+      "rotulo": "Nutri Bom Alimentos",
+      "tipo": "empresa"
+    },
+    "valor_96k": {
+      "rotulo": "R$ 96.000,00",
+      "tipo": "valor"
+    },
+    "data_pagamento": {
+      "rotulo": "14/03/2026",
+      "tipo": "data"
+    },
+    "valor_480k": {
+      "rotulo": "R$ 480.000,00",
+      "tipo": "valor"
+    },
+    "bianca_reis": {
+      "rotulo": "Bianca Reis",
+      "tipo": "pessoa"
+    },
+    "rogerio_souza_lima": {
+      "rotulo": "Rogério Souza Lima",
+      "tipo": "pessoa"
+    },
+    "joana_alves": {
+      "rotulo": "Joana Alves",
+      "tipo": "pessoa"
+    },
+    "carlos_menezes": {
+      "rotulo": "Carlos Menezes",
+      "tipo": "pessoa"
+    }
   },
   "documentos": {
     "doc1": {
@@ -114,10 +229,12 @@
         "",
         "Foto: Secretário Souza prova a nova merenda (pão de queijo)."
       ],
-      "termos": ["antonio_souza", "nutri_bem"],
+      "termos": [
+        "antonio_souza",
+        "nutri_bem"
+      ],
       "revela_nos": [],
-      "inocentes": [],
-      "nomes_prova": []
+      "inocentes": []
     },
     "doc2": {
       "arquivo": "servidores_do_mes_marco.html",
@@ -135,10 +252,14 @@
         "",
         "Intranet · Acesso interno: nome.sobrenome"
       ],
-      "termos": ["lucia_prado", "ano_2019", "pipoca", "edson_farias"],
+      "termos": [
+        "lucia_prado",
+        "ano_2019",
+        "pipoca",
+        "edson_farias"
+      ],
       "revela_nos": [],
-      "inocentes": [],
-      "nomes_prova": []
+      "inocentes": []
     },
     "doc3": {
       "arquivo": "RE_RE_ligacao_urgente.eml",
@@ -165,10 +286,17 @@
         "Lúcia Prado",
         "Assessora (servidora do mês, aliás)"
       ],
-      "termos": ["rogerio", "cunhado", "irmao", "paulo", "srv_contratos"],
-      "revela_nos": ["n3"],
-      "inocentes": [],
-      "nomes_prova": []
+      "termos": [
+        "rogerio",
+        "cunhado",
+        "irmao",
+        "paulo",
+        "srv_contratos"
+      ],
+      "revela_nos": [
+        "n3"
+      ],
+      "inocentes": []
     },
     "doc4": {
       "arquivo": "pagamentos_merenda_2025-2026.xlsx",
@@ -183,10 +311,19 @@
         "Obs.: aumento aprovado pela Secretaria. Não questionar.",
         "Lançado por: estagiária [Bianca Reis]"
       ],
-      "termos": ["data_2025", "nutri_bom", "valor_96k", "data_pagamento", "nutri_bem", "valor_480k", "bianca_reis"],
+      "termos": [
+        "data_2025",
+        "nutri_bom",
+        "valor_96k",
+        "data_pagamento",
+        "nutri_bem",
+        "valor_480k",
+        "bianca_reis"
+      ],
       "revela_nos": [],
-      "inocentes": ["bianca_reis"],
-      "nomes_prova": []
+      "inocentes": [
+        "bianca_reis"
+      ]
     },
     "doc5": {
       "arquivo": "contrato_027-2026_merenda.pdf",
@@ -208,10 +345,18 @@
         "",
         "Testemunha: [Joana Alves], servidora, matr. 1187"
       ],
-      "termos": ["nutri_bem", "rogerio_souza_lima", "valor_480k", "data_pagamento", "antonio_souza", "joana_alves"],
+      "termos": [
+        "nutri_bem",
+        "rogerio_souza_lima",
+        "valor_480k",
+        "data_pagamento",
+        "antonio_souza",
+        "joana_alves"
+      ],
       "revela_nos": [],
-      "inocentes": ["joana_alves"],
-      "nomes_prova": ["antonio_souza", "rogerio_souza_lima"]
+      "inocentes": [
+        "joana_alves"
+      ]
     },
     "doc6": {
       "arquivo": "protocolo_reclamacao_0412.pdf",
@@ -227,26 +372,63 @@
         "",
         "Encaminhamento: Secretaria de Educação. Situação: ARQUIVADO sem resposta."
       ],
-      "termos": ["carlos_menezes"],
+      "termos": [
+        "carlos_menezes"
+      ],
       "revela_nos": [],
-      "inocentes": ["carlos_menezes"],
-      "nomes_prova": []
+      "inocentes": [
+        "carlos_menezes"
+      ]
     }
   },
   "fatos": {
     "fato1": {
       "frase": "{quem} autorizou o pagamento de {quanto} à {empresa} em {quando}.",
-      "lacunas": ["quem", "quanto", "empresa", "quando"],
-      "respostas": { "quem": "antonio_souza", "quanto": "valor_480k", "empresa": "nutri_bem", "quando": "data_pagamento" },
-      "iscas": ["lucia_prado", "valor_96k", "nutri_bom", "data_2025"],
-      "provas": ["doc5", "doc4"]
+      "lacunas": [
+        "quem",
+        "quanto",
+        "empresa",
+        "quando"
+      ],
+      "respostas": {
+        "quem": "antonio_souza",
+        "quanto": "valor_480k",
+        "empresa": "nutri_bem",
+        "quando": "data_pagamento"
+      },
+      "iscas": [
+        "lucia_prado",
+        "valor_96k",
+        "nutri_bom",
+        "data_2025"
+      ],
+      "provas": [
+        "doc5",
+        "doc4"
+      ]
     },
     "fato2": {
       "frase": "A {empresa} tem como sócio {socio}, {parentesco} de {quem}.",
-      "lacunas": ["empresa", "socio", "parentesco", "quem"],
-      "respostas": { "empresa": "nutri_bem", "socio": "rogerio_souza_lima", "parentesco": "cunhado", "quem": "antonio_souza" },
-      "iscas": ["paulo", "irmao", "rogerio"],
-      "provas": ["doc5"]
+      "lacunas": [
+        "empresa",
+        "socio",
+        "parentesco",
+        "quem"
+      ],
+      "respostas": {
+        "empresa": "nutri_bem",
+        "socio": "rogerio_souza_lima",
+        "parentesco": "cunhado",
+        "quem": "antonio_souza"
+      },
+      "iscas": [
+        "paulo",
+        "irmao",
+        "rogerio"
+      ],
+      "provas": [
+        "doc5"
+      ]
     }
   },
   "resultado": {

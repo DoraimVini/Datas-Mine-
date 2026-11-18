@@ -19,7 +19,7 @@ func _init() -> void:
 	var erros := sessao.iniciar(id_caso)
 	if not erros.is_empty():
 		for e in erros:
-			print("conteúdo inválido: " + e)
+			print(_fmt(t["rotulos"]["conteudo_invalido"], {"erro": e}))
 		quit(1)
 		return
 	caso = sessao.caso
@@ -86,50 +86,51 @@ func _processar(linha: String) -> void:
 		"rede": _rede()
 		"scan", "ls", "limpar", "disconnect", "entregar":
 			_exec({"tipo": verbo})
+		"memorando": print(_fmt(t["rotulos"]["memorando"], {"regra": caso["memorando"]}))
 		"probe", "connect":
-			if _faltam(p, 2, verbo + " <nó>"):
+			if _faltam(p, 2, verbo):
 				return
 			_exec({"tipo": verbo, "no": p[1]})
 		"login":
-			if _faltam(p, 4, "login <nó> <usuário> <senha>"):
+			if _faltam(p, 4, verbo):
 				return
 			_exec({"tipo": "login", "no": p[1], "usuario": p[2], "senha": p[3]})
 		"crack":
-			if _faltam(p, 3, "crack <nó> <porta>"):
+			if _faltam(p, 3, verbo):
 				return
 			_exec({"tipo": "crack", "no": p[1], "porta": int(p[2])})
 		"pin":
-			if _faltam(p, 2, "pin <código>"):
+			if _faltam(p, 2, verbo):
 				return
 			_exec({"tipo": "pin", "codigo": resto})
 		"read", "download":
-			if _faltam(p, 2, verbo + " <doc>"):
+			if _faltam(p, 2, verbo):
 				return
 			_exec({"tipo": verbo, "doc": p[1].to_lower()})
 		"coletar":
-			if _faltam(p, 2, "coletar <termo>"):
+			if _faltam(p, 2, verbo):
 				return
 			_exec({"tipo": "coletar", "termo": resto})
 		"preencher":
-			if _faltam(p, 4, "preencher <fato> <lacuna> <termo>"):
+			if _faltam(p, 4, verbo):
 				return
 			_exec({"tipo": "preencher", "fato": p[1].to_lower(), "lacuna": p[2], "termo": " ".join(p.slice(3))})
 		"limpar-lacuna":
-			if _faltam(p, 3, "limpar-lacuna <fato> <lacuna>"):
+			if _faltam(p, 3, verbo):
 				return
 			_exec({"tipo": "limpar_lacuna", "fato": p[1].to_lower(), "lacuna": p[2]})
-		"ocultar":
-			if _faltam(p, 3, "ocultar <doc> <nome>"):
+		"ocultar", "revelar":
+			if _faltam(p, 3, verbo):
 				return
-			_exec({"tipo": "ocultar", "doc": p[1].to_lower(), "nome": " ".join(p.slice(2))})
+			_exec({"tipo": verbo, "doc": p[1].to_lower(), "nome": " ".join(p.slice(2))})
 		_:
 			print(_fmt(t["erros"]["comando_desconhecido"], {}))
 
 
-## Mostra o uso correto e devolve true se a linha tiver menos partes que o necessário.
-func _faltam(partes: PackedStringArray, minimo: int, uso: String) -> bool:
+## Mostra o uso correto (texto em console.json → usos) e devolve true se faltarem partes.
+func _faltam(partes: PackedStringArray, minimo: int, verbo: String) -> bool:
 	if partes.size() < minimo:
-		_uso(uso)
+		_uso(t["usos"].get(verbo, verbo))
 		return true
 	return false
 
@@ -233,6 +234,8 @@ func _mostrar(e: Dictionary) -> void:
 			_fato(e["fato"])
 		"nome_oculto":
 			print(_fmt(ev["nome_oculto"], e))
+		"nome_revelado":
+			print(_fmt(ev["nome_revelado"], {"doc": e["doc"], "rotulo": _rotulo(e["termo"])}))
 		"parecer_recusado":
 			_parecer(e["parecer"])
 			print(ev["parecer_recusado"])
@@ -275,7 +278,7 @@ func _intro() -> void:
 	_fatos()
 	_rede()
 	_status()
-	print("(digite ajuda para ver os comandos)")
+	print(r["dica_ajuda"])
 
 
 func _ajuda() -> void:
@@ -286,20 +289,20 @@ func _ajuda() -> void:
 func _caderno() -> void:
 	print("%s (%d)" % [t["rotulos"]["caderno"], sessao.estado["caderno"].size()])
 	for termo in sessao.estado["caderno"]:
-		print("  ├─ %s   (%s)" % [_rotulo(termo), caso["termos"][termo]["tipo"]])
+		print(_fmt(t["rotulos"]["item_caderno"], {"rotulo": _rotulo(termo), "tipo": caso["termos"][termo]["tipo"]}))
 
 
 func _pendrive() -> void:
 	print("%s (%d)" % [t["rotulos"]["pendrive"], sessao.estado["pendrive"].size()])
 	for d in sessao.estado["pendrive"]:
-		print("  └─ %s   %s" % [d, caso["documentos"][d]["arquivo"]])
+		print(_fmt(t["rotulos"]["item_pendrive"], {"id": d, "arquivo": caso["documentos"][d]["arquivo"]}))
 
 
 func _fato(id: String) -> void:
 	var lacunas: Dictionary = sessao.estado["fatos"][id]
 	var dados := {}
 	for l in lacunas:
-		dados[l] = "[%s]" % (_rotulo(lacunas[l]) if lacunas[l] != "" else "%s ____" % l)
+		dados[l] = "[%s]" % (_rotulo(lacunas[l]) if lacunas[l] != "" else _fmt(t["rotulos"]["lacuna_vazia"], {"lacuna": l}))
 	var linha := "%s: %s" % [id, caso["fatos"][id]["frase"].format(dados)]
 	if Dossie.fato_completo(sessao.estado, id):
 		linha += "   " + t["rotulos"]["completo"]

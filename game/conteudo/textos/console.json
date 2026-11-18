@@ -11,7 +11,11 @@
     "memorando": "📋 Memorando da redação: {regra}",
     "fatos": "Fatos do dossiê",
     "completo": "● completo",
-    "termos_doc": "termos",
+    "lacuna_vazia": "{lacuna} ____",
+    "conteudo_invalido": "conteúdo inválido: {erro}",
+    "dica_ajuda": "(digite ajuda para ver os comandos)",
+    "item_caderno": "  ├─ {rotulo}   ({tipo})",
+    "item_pendrive": "  └─ {id}   {arquivo}",
     "estado_no": {
       "publico": "público",
       "desbloqueado": "aberto",
@@ -35,9 +39,24 @@
     "preencher <fato> <lacuna> <termo> coloca um termo do caderno numa lacuna",
     "limpar-lacuna <fato> <lacuna>     esvazia uma lacuna",
     "ocultar <doc> <nome>              cobre um nome num documento do pendrive",
+    "revelar <doc> <nome>              desfaz um ocultar",
     "entregar                          envia o dossiê (desconectado)",
-    "caderno · fatos · pendrive · rede · ajuda · sair"
+    "caderno · fatos · pendrive · rede · memorando · ajuda · sair"
   ],
+  "usos": {
+    "probe": "probe <nó>",
+    "connect": "connect <nó>",
+    "login": "login <nó> <usuário> <senha>",
+    "crack": "crack <nó> <porta>",
+    "pin": "pin <código>",
+    "read": "read <doc>",
+    "download": "download <doc>",
+    "coletar": "coletar <termo>",
+    "preencher": "preencher <fato> <lacuna> <termo>",
+    "limpar-lacuna": "limpar-lacuna <fato> <lacuna>",
+    "ocultar": "ocultar <doc> <nome>",
+    "revelar": "revelar <doc> <nome>"
+  },
   "eventos": {
     "ruido": "Ruído +{custo}  →  {total} / {orcamento}",
     "varredura_novos": "Varredura: {lista} ★ novo(s)",
@@ -66,6 +85,7 @@
     "lacuna_preenchida": "✔ Lacuna preenchida.",
     "lacuna_limpa": "✔ Lacuna esvaziada.",
     "nome_oculto": "✔ Nome coberto no {doc}: ██████",
+    "nome_revelado": "✔ Nome {rotulo} voltou a aparecer no {doc}.",
     "parecer_titulo": "📨 {nome} responde:",
     "parecer_confirmado": "  {fato}: confirmado ✔",
     "parecer_incorreto": "  {fato}: não bate com os documentos ✖",
@@ -107,6 +127,10 @@
     "fatos_incompletos": "✖ Ainda há lacunas vazias em: {lista}.",
     "caso_ja_concluido": "✖ Este caso já foi concluído.",
     "comando_desconhecido": "✖ Comando desconhecido. Digite ajuda.",
+    "minigame_em_andamento": "✖ A quebra de PIN de {host} já está em andamento. Responda com pin <código>.",
+    "ja_oculto": "✖ Esse nome já está coberto.",
+    "nao_oculto": "✖ Esse nome não está coberto.",
+    "sem_caso": "✖ Nenhum caso carregado.",
     "uso": "✖ Uso: {uso}"
   }
 }
