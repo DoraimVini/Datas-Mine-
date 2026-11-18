@@ -2,6 +2,7 @@
   "projeto": "Datas_Mine!",
   "genero": "Simulador de hacker",
   "playbook": "Gêneros/Simulador de hacker.md",
+  "playbooks_extras": ["Gêneros/Jogo de dedução e investigação.md", "Gêneros/Jogo de inspeção de documentos.md"],
   "repo": "https://github.com/DoraimVini/Datas-Mine-",
   "gdd": "02 - Projetos/GDD.md",
   "decisoes": "02 - Projetos/Decisões",

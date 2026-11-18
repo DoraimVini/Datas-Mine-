@@ -6,7 +6,7 @@ Projeto do segundo cérebro `Game_dev_IA`. As regras gerais vêm do `CLAUDE.md` 
 - **Gênero:** Simulador de hacker, playbook em `../Gêneros/Simulador de hacker.md`
 - **Repositório:** https://github.com/DoraimVini/Datas-Mine-
 - **Configuração do projeto:** `.gamedev.json` (gênero, caminhos, marco atual)
-- **GDD:** `02 - Projetos/GDD.md` (ainda não criado; use `/gdd`)
+- **GDD:** `02 - Projetos/GDD.md` (v0.1, marco "conceito"; atualize com `/gdd`)
 - **Decisões:** `02 - Projetos/Decisões/` (`NNNN - título.md`)
 - **Retros:** `02 - Projetos/Retros/`
 - **Código:** ainda não definido
