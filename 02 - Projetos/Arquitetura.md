@@ -154,7 +154,7 @@ Cada sistema é um **módulo de funções puras**. Nenhum guarda estado escondid
 | Comandos | `res://nucleo/comandos.gd`: `Comando` como Dictionary tipado ou classe. `aplicar(estado, comando) -> Resultado{estado, eventos}` | O único jeito de mudar o estado |
 | Aplicação | Autoload `Jogo` (`res://app/jogo.gd`): guarda o estado atual, executa comandos, emite `signal evento(e)`, salva e carrega | O único dono do `Estado` em runtime |
 | Conteúdo | `res://conteudo/**/*.json` + `res://app/conteudo.gd` (carregar e validar) | Falha alto se o conteúdo estiver inválido |
-| Apresentação | `res://ui/` (cenas `Control`: `Desktop.tscn`, `apps/*.tscn`, `Terminal.tscn`), `Theme` em `res://ui/tema.tres`, áudio em `res://audio/` | Lê o estado só para ler e emite comandos via `Jogo.executar(cmd)` |
+| Apresentação | `res://ui/` (cenas `Control`: `Desktop.tscn`, `apps/*.tscn`, `Terminal.tscn`), `Theme` em `res://ui/tema.tres`, áudio em `res://audio/`. **Lógica de interface em grafos do Orchestrator** (ADR 0005), feitos pelo usuário | Lê o estado só para ler e emite comandos via `Jogo.executar(cmd)`. **Nenhuma regra de jogo dentro de um grafo** |
 | Save | `user://save.json`, `{versaoSave, estado}` | Migrações testadas |
 | Testes | `res://testes/` com GUT ou gdUnit4. Execução por linha de comando (`godot --headless ...`) | Núcleo e conteúdo testados sem abrir janela |
 
@@ -226,7 +226,7 @@ erDiagram
     FATO }o--|{ DOCUMENTO : sustentado_por
 ```
 - **Ids estáveis** (`"caso1.doc.contrato_merenda"`) separados do **texto exibido**. A lógica só compara ids (veja a ADR 0003).
-- O formato exato (JSON Schema) será a **ADR 0005**, derivada do caso 1 escrito no papel.
+- O formato exato (JSON Schema) será a **ADR 0006**, derivada do caso 1 escrito no papel.
 
 ### 8.2 Textos (PT-BR)
 - Nenhuma string visível ao jogador fica no código: tudo vem de `conteudo/textos/*.json` ou do próprio conteúdo dos casos.
@@ -268,8 +268,9 @@ Como o núcleo é determinístico, um **cenário é só uma lista de comandos**.
 | [[0002 - Interação híbrida com progressão\|0002]] | Interação híbrida e camada única de comandos | aceita |
 | [[0003 - Idioma do jogo - PT-BR\|0003]] | Idioma PT-BR, textos em dados | aceita |
 | [[0004 - Engine e linguagem - Godot 4.7 com GDScript\|0004]] | Godot 4.7 + GDScript, renderizador Compatibility | aceita |
-| 0005 | Formato do conteúdo (JSON) | **pendente**, depois do caso 1 no papel |
-| 0006 | Núcleo funcional + Command + eventos (seção 4) e framework de testes | **a registrar** no setup do projeto Godot |
+| [[0005 - Visual scripting híbrido com Orchestrator\|0005]] | Visual scripting híbrido: núcleo em GDScript, apresentação em Orchestrator | aceita |
+| 0006 | Formato do conteúdo (JSON) | **pendente**, depois do caso 1 no papel |
+| 0007 | Núcleo funcional + Command + eventos (seção 4) e framework de testes | **a registrar** no setup do projeto Godot |
 
 ---
 
@@ -291,7 +292,7 @@ Como o núcleo é determinístico, um **cenário é só uma lista de comandos**.
 |---|---|---|
 | A lógica vai parar em nós do Godot (tentação da engine) | Regras espalhadas e sem teste | Regra 5.4 (núcleo sem `Node`) + checagem no `/revisar` |
 | GPU sem Vulkan | Efeitos limitados | Compatibility desde o início. Efeitos CRT com shaders simples de `CanvasItem` |
-| Formato de conteúdo instável | Retrabalho em tudo | Derivar o formato do caso 1 real (ADR 0005), com testes de conteúdo desde o começo |
+| Formato de conteúdo instável | Retrabalho em tudo | Derivar o formato do caso 1 real (ADR 0006), com testes de conteúdo desde o começo |
 | Três fases = escopo grande | O protótipo não fecha | O protótipo é só o caso 1 e só o desktop. O terminal fica para o vertical slice |
 | Volume de texto | Gargalo de produção | Textos em dados, edição direta no Obsidian/VS Code, poucos documentos por caso |
 | Quebra-cabeça impossível ou chutável | Mata a diversão | Testes de solucionabilidade + playtests silenciosos + feedback parcial controlado |

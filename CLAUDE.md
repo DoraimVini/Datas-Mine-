@@ -16,6 +16,7 @@ Projeto do segundo cérebro `Game_dev_IA`. As regras gerais vêm do `CLAUDE.md` 
 ## Regras específicas
 - **Godot 4.7 + GDScript, renderizador Compatibility** (decisão 0004). Este PC tem uma GPU sem Vulkan: nunca mude para Forward+/Mobile.
 - **Núcleo puro:** os scripts em `res://nucleo/` não usam `Node`, `get_tree()`, `Input` nem `FileAccess`. Veja a seção 5.4 da arquitetura.
+- **Visual scripting híbrido** (decisão 0005): o núcleo e o autoload `Jogo` ficam em GDScript (Claude escreve). A interface, as telas e os efeitos ficam em grafos do **Orchestrator 2.5.x** (o usuário monta, e Claude ensina nó a nó). Os grafos só chamam `Jogo.executar(...)` e escutam os sinais de `Jogo`: **nenhuma regra de jogo num grafo**. Salve os grafos **sempre em `.torch` (texto)**, nunca em `.os` (binário). O plugin baixado está em `C:\Users\werne\Ferramentas\Godot\plugins\orchestrator-2.5\` (copiar `addons/orchestrator` para `game/addons/` no setup).
 - Estilo de GDScript: siga o guia oficial (`snake_case` para funções e variáveis, `PascalCase` para classes, tipagem estática sempre que possível). Os nomes de domínio ficam em português (`ruido`, `dossie`, `fato`).
 - Executável do Godot 4.7.2: `C:\Users\werne\Ferramentas\Godot\Godot_v4.7.2-stable_win64_console.exe` (use a versão `_console` na linha de comando e nos testes, com `--headless`).
 - Documentação offline do Godot 4.7: `C:\Users\werne\GameDevDocs\godot\html\` (busque com Grep antes de pesquisar na web).

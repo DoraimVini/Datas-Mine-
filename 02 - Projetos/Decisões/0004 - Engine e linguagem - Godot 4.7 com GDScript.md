@@ -35,7 +35,7 @@ A arquitetura em camadas continua valendo, adaptada ao Godot:
 | **Aplicação** | Um *autoload* `Jogo` (executor de comandos, save, carregamento de conteúdo) + cenas principais |
 | **Apresentação** | Cenas com nós `Control` (apps do desktop, terminal, quadro), `Theme`, `AudioStreamPlayer` |
 | **Plataforma** | O próprio Godot (janela, input, áudio, disco via `user://`) |
-| **Conteúdo** | JSON em `res://conteudo/` (formato exato na ADR 0005), carregado e validado na inicialização |
+| **Conteúdo** | JSON em `res://conteudo/` (formato exato na ADR 0006), carregado e validado na inicialização |
 | **Testes** | **GUT** ou **gdUnit4** para o núcleo e os cenários (escolha no setup) |
 
 ## Consequências
