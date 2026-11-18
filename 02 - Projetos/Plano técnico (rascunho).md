@@ -1,10 +1,13 @@
 ---
 tags: [plano, rascunho, tecnico]
-status: rascunho
+status: substituido
 criado: 2026-11-18
 ---
 
 # Plano técnico (rascunho): sem engine, TypeScript + Canvas
+
+> [!failure] Substituído em 2026-11-18
+> O projeto vai usar **Godot 4.7 + GDScript** ([[0004 - Engine e linguagem - Godot 4.7 com GDScript]]). A ideia de protótipo abaixo continua válida como referência de design. A parte técnica não vale mais.
 
 > [!warning] Rascunho, não é decisão
 > Proposta guardada para retomar depois que o GDD existir. A linguagem será decidida com `/decisao`. Comparação de opções em `../Conhecimento/Jogo sem engine.md` (no cérebro).

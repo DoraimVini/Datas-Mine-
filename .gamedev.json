@@ -5,9 +5,11 @@
   "playbooks_extras": ["Gêneros/Jogo de dedução e investigação.md", "Gêneros/Jogo de inspeção de documentos.md"],
   "repo": "https://github.com/DoraimVini/Datas-Mine-",
   "gdd": "02 - Projetos/GDD.md",
+  "arquitetura": "02 - Projetos/Arquitetura.md",
   "decisoes": "02 - Projetos/Decisões",
   "retros": "02 - Projetos/Retros",
-  "codigo": null,
+  "codigo": "game",
+  "engine": "Godot 4.7 (GDScript, renderizador Compatibility)",
   "marco": "conceito",
   "comandos": {
     "teste": null,

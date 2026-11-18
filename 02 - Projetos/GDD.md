@@ -127,10 +127,10 @@ Rotina de dias no trabalho, relógio em tempo real, dinheiro, redes procedurais,
 
 ## Perguntas em aberto
 1. ~~Interação~~: decidida (0002).
-2. **Idioma do jogo:** português, inglês ou os dois?
+2. ~~Idioma~~: decidido, PT-BR com textos em arquivos de dados ([[0003 - Idioma do jogo - PT-BR]]).
 3. **O hacktivista:** tem nome e história (por que começou?) ou é anônimo?
 4. **Contatos:** as jornalistas são personagens com arco próprio? (Ex.: a repórter do caso 3 aparece fichada no Projeto Espelho.)
-5. **Linguagem ou engine:** decidir depois da interação. → `/decisao`
+5. ~~Linguagem ou engine~~: decidida, Godot 4.7 + GDScript ([[0004 - Engine e linguagem - Godot 4.7 com GDScript]]).
 
 ## Histórico
 - 2026-11-18: **v0.3.** Aplicadas as propostas de [[Enquadramento de gênero]]: o quadro de evidências passa a usar **fatos com lacunas** e um caderno de termos; entra o **feedback parcial** da jornalista a partir do caso 2; as regras novas chegam por um **memorando da redação**; o protótipo passa a exigir **5 a 7 playtests silenciosos**.
