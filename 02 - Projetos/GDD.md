@@ -68,7 +68,8 @@ Cada caso tem três fases, sempre na mesma ordem:
 | **Memorando da redação** | No começo de cada caso, a regra editorial nova chega **sozinha**, como um memorando curto, sem diálogo nem evento por cima, para não se perder. O memorando fica sempre acessível num painel de regras | 1, 4 | proposta |
 | **Checklist editorial** | A jornalista confere o dossiê contra as regras acumuladas do caso, que crescem como no *Papers, Please*. Ela devolve com um pedido claro, apontando **qual regra falhou** ("preciso de uma confirmação do pagamento") | 1, 4 | proposta |
 | **Feedback parcial** | Caso 1: a jornalista só diz se o fato está certo ou errado. **A partir do caso 2**, ela diz **quantos campos estão errados** ("2 lacunas não batem"), sem dizer quais. Isso evita a frustração do tudo ou nada sem entregar a resposta. O limite de envios por fato fica para o protótipo decidir | 1 | proposta |
-| **Voltar à rede** | Se o dossiê for devolvido, você pode voltar à rede para buscar o que falta, mas cada volta custa Exposição | 1, 4 | proposta |
+| **Voltar à rede** | Se o dossiê for devolvido, você pode voltar à rede para buscar o que falta. **Ao sair, os nós privados trancam de novo**: voltar exige login ou crack outra vez (ruído), e sair com rastros custa Exposição | 1, 4 | implementada no protótipo |
+| **Revelar** | Desfaz um "ocultar": o jogador pode ter coberto uma prova por engano. Ocultar uma resposta do próprio fato (quem ele acusa) tira a força de prova daquele documento **para aquele fato** | 4 | implementada no protótipo |
 
 ## Finais (definidos ao fim do caso 5)
 Três medidas acumuladas na campanha:
@@ -100,9 +101,11 @@ Decidido em [[0002 - Interação híbrida com progressão]].
 | Senha errada | 15 | 15 |
 | `read` | 0 | 0 |
 | `download` | 15 | 10 |
-| `limpar rastros` | 20 | 12 |
+| `limpar rastros` (por nó) | 10 | 6 |
 
-**Exemplo, caso 1** (orçamento de 100, rede de 3 nós): `scan` (10) + 2× `probe` (10) + `crack` (25) + 2× `download` (30) = **75**. Sobram 25. Usar `limpar rastros` (20) deixa a Exposição em zero, com sobra de 5. Já no caso 1 o jogo ensina a troca entre economizar ruído e apagar rastros.
+**Regras de limite:** o lockdown só acontece quando o ruído **passa** do orçamento (chegar exatamente a 100 é permitido). A ação que estouraria o orçamento não acontece.
+
+**Exemplo, caso 1** (orçamento de 100, rede de 3 nós; caminho testado): `scan` (10) + `probe` (5) + `login` (5) + `probe` pelo nome lido (5) + `crack` (25) + `download` (15) = **65**. Limpar os dois nós invadidos (2 × 10) fecha em **85 com Exposição 0**. Cada `limpar` é uma escolha por nó: economizar ruído ou apagar rastros.
 
 ## Estética
 - Desktop retrô-futurista, tipografia monoespaçada no terminal, paleta escura.
@@ -135,6 +138,7 @@ Rotina de dias no trabalho, relógio em tempo real, dinheiro, redes procedurais,
 5. ~~Linguagem ou engine~~: decidida, Godot 4.7 + GDScript ([[0004 - Engine e linguagem - Godot 4.7 com GDScript]]).
 
 ## Histórico
+- 2026-11-18: **Revisão do protótipo (qa-reviewer).** Decisões aplicadas: `limpar` por nó custa 10; os nós privados trancam ao sair; o lockdown só acontece ao passar do orçamento; entra o comando `revelar`; os nomes de prova passam a valer por fato.
 - 2026-11-18: **Primeiro playtest** do caso 1, em texto ([[2026-11-18 - Caso 1 em texto (Vini)]]). Diversão confirmada: "fez anotar pistas e nomes". O PIN e as iscas ficaram fáceis demais. Entram a regra do nome lido, o aviso de rastros e o tutorial contextual. Conteúdo em [[Caso 1 - A Merenda de Vila Serena]].
 - 2026-11-18: **v0.3.** Aplicadas as propostas de [[Enquadramento de gênero]]: o quadro de evidências passa a usar **fatos com lacunas** e um caderno de termos; entra o **feedback parcial** da jornalista a partir do caso 2; as regras novas chegam por um **memorando da redação**; o protótipo passa a exigir **5 a 7 playtests silenciosos**.
 - 2026-11-18: interação definida como híbrido com progressão ([[0002 - Interação híbrida com progressão]]).

@@ -28,8 +28,10 @@ Estrutura de um caso (chaves principais):
 | `regras_editoriais[]`, `feedback` (`binario` \| `parcial`) | checklist do caso |
 | `no_inicial`, `nos{id → host, publico, vizinhos[], portas[], acesso{}, arquivos[]}` | rede. `acesso.tipo`: `publico` \| `login` \| `pin` |
 | `termos{id → rotulo, tipo}` | tudo o que pode ser coletado. A lógica compara **ids** |
-| `documentos{id → arquivo, texto[], termos[], revela_nos[], inocentes[], nomes_prova[]}` | documentos e seus papéis |
-| `fatos{id → frase, lacunas[], respostas{lacuna → termo_id}, iscas[], provas[]}` | dossiê |
+| `documentos{id → arquivo, texto[], termos[], revela_nos[], inocentes[]}` | documentos e seus papéis |
+| `fatos{id → frase, lacunas[], respostas{lacuna → termo_id}, iscas[], provas[]}` | dossiê. Uma prova perde força para um fato quando uma das **respostas daquele fato** é ocultada no documento (sem campo extra) |
+
+> Atualização (revisão do protótipo): o campo `nomes_prova` por documento foi removido. A regra passou a valer por fato e a ser derivada das respostas. O validador também confere as chaves de `custos` e `exposicao`, o valor de `feedback`, as `regras_editoriais` conhecidas e se a porta de acesso existe em `portas`.
 
 **Validação:** `app/conteudo.gd` valida o caso ao carregar (referências quebradas, respostas que não aparecem em nenhum documento, provas inexistentes). Um teste automatizado roda a mesma validação.
 
