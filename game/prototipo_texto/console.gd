@@ -65,7 +65,7 @@ func _loop() -> void:
 		if linha == "":
 			continue
 		print(linha)  # eco do comando (útil quando a entrada vem de um arquivo)
-		if linha.to_lower() in ["sair", "exit", "quit"]:
+		if linha.to_lower().trim_prefix("/") in ["sair", "exit", "quit"]:
 			return
 		_processar(linha)
 		if sessao.estado["concluido"] and linha.to_lower().begins_with("entregar"):
@@ -76,10 +76,10 @@ func _loop() -> void:
 
 func _processar(linha: String) -> void:
 	var p := linha.split(" ", false)
-	var verbo := p[0].to_lower()
+	var verbo := p[0].to_lower().trim_prefix("/")  # aceita "/help", "/scan"...
 	var resto := linha.substr(linha.find(" ") + 1).strip_edges() if p.size() > 1 else ""
 	match verbo:
-		"ajuda", "help": _ajuda()
+		"ajuda", "help", "?": _ajuda(resto.to_lower().trim_prefix("/"))
 		"caderno": _caderno()
 		"fatos": _fatos()
 		"pendrive": _pendrive()
@@ -130,15 +130,25 @@ func _processar(linha: String) -> void:
 ## Mostra o uso correto (texto em console.json → usos) e devolve true se faltarem partes.
 func _faltam(partes: PackedStringArray, minimo: int, verbo: String) -> bool:
 	if partes.size() < minimo:
-		_uso(t["usos"].get(verbo, verbo))
+		_uso(t["manual"]["comandos"].get(verbo, {}).get("uso", verbo))
 		return true
 	return false
+
+
+var _dicas_vistas := {}  # tutorial contextual: cada dica aparece só na primeira vez
 
 
 func _exec(cmd: Dictionary) -> void:
 	for e in sessao.executar(cmd):
 		_mostrar(e)
+		_dica(e["tipo"])
 	_status()
+
+
+func _dica(tipo_evento: String) -> void:
+	if t["dicas"].has(tipo_evento) and not _dicas_vistas.has(tipo_evento):
+		_dicas_vistas[tipo_evento] = true
+		print(t["rotulos"]["prefixo_dica"] + t["dicas"][tipo_evento])
 
 
 func _uso(uso: String) -> void:
@@ -281,9 +291,41 @@ func _intro() -> void:
 	print(r["dica_ajuda"])
 
 
-func _ajuda() -> void:
-	for l in t["ajuda"]:
-		print("  " + _fmt(l, caso["custos"]))
+## "help" lista os comandos por fase; "help <comando>" mostra o manual do comando.
+## Custos vêm do caso (dados), nunca fixos no texto.
+func _ajuda(comando: String) -> void:
+	var m: Dictionary = t["manual"]
+	if comando != "":
+		if not m["comandos"].has(comando):
+			print(_fmt(t["erros"]["help_desconhecido"], {"comando": comando}))
+			return
+		var c: Dictionary = m["comandos"][comando]
+		print("── %s ──" % comando.to_upper())
+		print(c["resumo"])
+		print(_fmt(m["detalhe_uso"], {"uso": c["uso"]}))
+		if c.has("custo"):
+			print(_fmt(m["detalhe_custo"], {"valor": _texto_custo(c)}))
+		for l in c["explicacao"]:
+			print("  • " + l)
+		print(_fmt(m["detalhe_exemplo"], {"exemplo": c["exemplo"]}))
+		return
+	print("═══ %s ═══" % m["titulo"])
+	for g in m["grupos"]:
+		print(g["titulo"])
+		for nome in g["comandos"]:
+			var c: Dictionary = m["comandos"][nome]
+			var custo: String = _fmt(m["custo"], {"valor": _texto_custo(c)}) if c.has("custo") else ""
+			print(_fmt(m["linha_comando"], {"uso": c["uso"], "espaco": " ".repeat(maxi(1, 36 - c["uso"].length())), "resumo": c["resumo"], "custo": custo}))
+	print(m["rodape"])
+
+
+func _texto_custo(c: Dictionary) -> String:
+	var txt := str(int(caso["custos"][c["custo"]]))
+	if c.has("custo_rotulo"):
+		txt += " " + c["custo_rotulo"]
+	if c.has("custo_erro"):
+		txt += " (erro: %d)" % int(caso["custos"][c["custo_erro"]])
+	return txt
 
 
 func _caderno() -> void:

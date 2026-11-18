@@ -13,7 +13,7 @@
     "completo": "● completo",
     "lacuna_vazia": "{lacuna} ____",
     "conteudo_invalido": "conteúdo inválido: {erro}",
-    "dica_ajuda": "(digite ajuda para ver os comandos)",
+    "dica_ajuda": "(digite help para ver os comandos · help <comando> para detalhes)",
     "item_caderno": "  ├─ {rotulo}   ({tipo})",
     "item_pendrive": "  └─ {id}   {arquivo}",
     "estado_no": {
@@ -21,41 +21,8 @@
       "desbloqueado": "aberto",
       "bloqueado": "fechado",
       "por_nome": "nome lido em documento"
-    }
-  },
-  "ajuda": [
-    "scan                              revela vizinhos do nó atual          ruído {scan}",
-    "probe <nó>                        portas e acesso de um nó             ruído {probe}",
-    "connect <nó>                      conecta a um nó aberto               ruído 0",
-    "login <nó> <usuário> <senha>      entra com credenciais (erro: {senha_errada})  ruído {login}",
-    "crack <nó> <porta>                abre uma porta com um quebra-cabeça  ruído {crack}",
-    "pin <código>                      responde ao quebra-cabeça (erro: {pin_errado})",
-    "ls                                lista os arquivos do nó",
-    "read <doc>                        lê um documento",
-    "coletar <termo>                   guarda um termo [entre colchetes] no caderno",
-    "download <doc>                    leva o documento como prova          ruído {download}",
-    "limpar                            apaga seus rastros do nó atual       ruído {limpar}",
-    "disconnect                        sai da rede (avisa se houver rastros)",
-    "preencher <fato> <lacuna> <termo> coloca um termo do caderno numa lacuna",
-    "limpar-lacuna <fato> <lacuna>     esvazia uma lacuna",
-    "ocultar <doc> <nome>              cobre um nome num documento do pendrive",
-    "revelar <doc> <nome>              desfaz um ocultar",
-    "entregar                          envia o dossiê (desconectado)",
-    "caderno · fatos · pendrive · rede · memorando · ajuda · sair"
-  ],
-  "usos": {
-    "probe": "probe <nó>",
-    "connect": "connect <nó>",
-    "login": "login <nó> <usuário> <senha>",
-    "crack": "crack <nó> <porta>",
-    "pin": "pin <código>",
-    "read": "read <doc>",
-    "download": "download <doc>",
-    "coletar": "coletar <termo>",
-    "preencher": "preencher <fato> <lacuna> <termo>",
-    "limpar-lacuna": "limpar-lacuna <fato> <lacuna>",
-    "ocultar": "ocultar <doc> <nome>",
-    "revelar": "revelar <doc> <nome>"
+    },
+    "prefixo_dica": "💡 "
   },
   "eventos": {
     "ruido": "Ruído +{custo}  →  {total} / {orcamento}",
@@ -131,6 +98,289 @@
     "ja_oculto": "✖ Esse nome já está coberto.",
     "nao_oculto": "✖ Esse nome não está coberto.",
     "sem_caso": "✖ Nenhum caso carregado.",
-    "uso": "✖ Uso: {uso}"
+    "uso": "✖ Uso: {uso}",
+    "help_desconhecido": "✖ Não há manual para \"{comando}\". Digite help."
+  },
+  "manual": {
+    "titulo": "MANUAL DO OPERADOR",
+    "linha_comando": "  {uso}{espaco}{resumo}{custo}",
+    "custo": "   [ruído {valor}]",
+    "rodape": "Digite help <comando> para ver detalhes. Ex.: help preencher",
+    "detalhe_uso": "Uso: {uso}",
+    "detalhe_custo": "Ruído: {valor}",
+    "detalhe_exemplo": "Exemplo: {exemplo}",
+    "grupos": [
+      {
+        "titulo": "🔓 INVADIR",
+        "comandos": [
+          "scan",
+          "probe",
+          "connect",
+          "login",
+          "crack",
+          "pin",
+          "ls",
+          "read",
+          "download",
+          "limpar",
+          "disconnect"
+        ]
+      },
+      {
+        "titulo": "🧩 DOSSIÊ",
+        "comandos": [
+          "coletar",
+          "caderno",
+          "fatos",
+          "preencher",
+          "limpar-lacuna",
+          "ocultar",
+          "revelar"
+        ]
+      },
+      {
+        "titulo": "📰 ENTREGAR",
+        "comandos": [
+          "pendrive",
+          "memorando",
+          "entregar"
+        ]
+      },
+      {
+        "titulo": "⚙ OUTROS",
+        "comandos": [
+          "rede",
+          "help",
+          "sair"
+        ]
+      }
+    ],
+    "comandos": {
+      "scan": {
+        "uso": "scan",
+        "resumo": "revela os nós vizinhos do nó atual",
+        "custo": "scan",
+        "explicacao": [
+          "Varre a rede a partir de onde você está e mostra computadores próximos.",
+          "Nós revelados aparecem em: rede."
+        ],
+        "exemplo": "scan"
+      },
+      "probe": {
+        "uso": "probe <nó>",
+        "resumo": "mostra portas e como entrar num nó",
+        "custo": "probe",
+        "explicacao": [
+          "Sonda um nó conhecido: portas abertas e o tipo de acesso (público, login ou PIN).",
+          "Se você leu o nome de um nó num documento, pode sondá-lo direto, sem scan."
+        ],
+        "exemplo": "probe gab-educacao-03"
+      },
+      "connect": {
+        "uso": "connect <nó>",
+        "resumo": "conecta a um nó já aberto",
+        "explicacao": [
+          "Entra num nó público ou que você já abriu nesta invasão.",
+          "Ao sair da rede, nós privados trancam de novo: será preciso login ou crack."
+        ],
+        "exemplo": "connect portal.vilaserena.gov"
+      },
+      "login": {
+        "uso": "login <nó> <usuário> <senha>",
+        "resumo": "entra com usuário e senha",
+        "custo": "login",
+        "custo_erro": "senha_errada",
+        "explicacao": [
+          "Credenciais certas abrem o nó com pouco ruído.",
+          "Senha errada custa mais ruído. Procure pistas nos documentos antes de chutar."
+        ],
+        "exemplo": "login gab-educacao-03 fulano.tal senha123"
+      },
+      "crack": {
+        "uso": "crack <nó> <porta>",
+        "resumo": "força uma trava de PIN com um quebra-cabeça",
+        "custo": "crack",
+        "explicacao": [
+          "Abre um quebra-cabeça lógico. Resolva com: pin <código>.",
+          "Caro em ruído: use quando não houver credenciais."
+        ],
+        "exemplo": "crack srv-exemplo 445"
+      },
+      "pin": {
+        "uso": "pin <código>",
+        "resumo": "responde ao quebra-cabeça do crack",
+        "custo": "pin_errado",
+        "custo_rotulo": "se errar",
+        "explicacao": [
+          "Cada PIN errado custa ruído. Deduza pelas regras do enunciado."
+        ],
+        "exemplo": "pin 123"
+      },
+      "ls": {
+        "uso": "ls",
+        "resumo": "lista os arquivos do nó atual",
+        "explicacao": [
+          "Mostra os documentos do nó onde você está conectado."
+        ],
+        "exemplo": "ls"
+      },
+      "read": {
+        "uso": "read <doc>",
+        "resumo": "lê um documento",
+        "explicacao": [
+          "Grátis. Termos entre [colchetes] podem ir para o caderno com: coletar.",
+          "Documentos do pendrive podem ser lidos mesmo desconectado."
+        ],
+        "exemplo": "read doc1"
+      },
+      "download": {
+        "uso": "download <doc>",
+        "resumo": "leva o documento como prova",
+        "custo": "download",
+        "explicacao": [
+          "Só documentos no pendrive contam como prova na entrega.",
+          "Baixe com critério: cada download faz ruído."
+        ],
+        "exemplo": "download doc1"
+      },
+      "limpar": {
+        "uso": "limpar",
+        "resumo": "apaga seus rastros do nó atual",
+        "custo": "limpar",
+        "explicacao": [
+          "Cada nó invadido guarda rastros. Sair com rastros aumenta sua Exposição.",
+          "A Exposição acumula na campanha inteira: discrição agora dá margem depois."
+        ],
+        "exemplo": "limpar"
+      },
+      "disconnect": {
+        "uso": "disconnect",
+        "resumo": "sai da rede",
+        "explicacao": [
+          "Se houver rastros, o primeiro disconnect só avisa. Digite de novo para sair mesmo assim.",
+          "É preciso estar desconectado para entregar o dossiê."
+        ],
+        "exemplo": "disconnect"
+      },
+      "coletar": {
+        "uso": "coletar <termo>",
+        "resumo": "guarda um termo [entre colchetes] no caderno",
+        "explicacao": [
+          "Só termos de documentos que você leu.",
+          "Os fatos do dossiê só aceitam termos do caderno."
+        ],
+        "exemplo": "coletar Fulano de Tal"
+      },
+      "caderno": {
+        "uso": "caderno",
+        "resumo": "mostra os termos coletados",
+        "explicacao": [
+          "Seu bloco de anotações: nomes, valores, datas, empresas."
+        ],
+        "exemplo": "caderno"
+      },
+      "fatos": {
+        "uso": "fatos",
+        "resumo": "mostra os fatos do dossiê e as lacunas",
+        "explicacao": [
+          "Cada fato é uma frase com [lacunas]. Preencha todas com termos do caderno."
+        ],
+        "exemplo": "fatos"
+      },
+      "preencher": {
+        "uso": "preencher <fato> <lacuna> <termo>",
+        "resumo": "coloca um termo do caderno numa lacuna",
+        "explicacao": [
+          "Veja os nomes das lacunas com: fatos.",
+          "Cuidado com iscas: termos parecidos que não batem com as provas."
+        ],
+        "exemplo": "preencher fato1 quem Fulano de Tal"
+      },
+      "limpar-lacuna": {
+        "uso": "limpar-lacuna <fato> <lacuna>",
+        "resumo": "esvazia uma lacuna",
+        "explicacao": [
+          "Útil para trocar um termo que você suspeita estar errado."
+        ],
+        "exemplo": "limpar-lacuna fato1 quem"
+      },
+      "ocultar": {
+        "uso": "ocultar <doc> <nome>",
+        "resumo": "cobre um nome num documento do pendrive",
+        "explicacao": [
+          "Proteja inocentes: pessoas comuns citadas nos documentos que você vai entregar.",
+          "Não cubra quem o fato acusa: isso tira a força da prova."
+        ],
+        "exemplo": "ocultar doc1 Fulano de Tal"
+      },
+      "revelar": {
+        "uso": "revelar <doc> <nome>",
+        "resumo": "desfaz um ocultar",
+        "explicacao": [
+          "Se cobriu um nome por engano, revele antes de entregar."
+        ],
+        "exemplo": "revelar doc1 Fulano de Tal"
+      },
+      "pendrive": {
+        "uso": "pendrive",
+        "resumo": "mostra os documentos baixados",
+        "explicacao": [
+          "São os anexos que vão junto com o dossiê."
+        ],
+        "exemplo": "pendrive"
+      },
+      "memorando": {
+        "uso": "memorando",
+        "resumo": "relê a regra editorial do caso",
+        "explicacao": [
+          "A jornalista confere o dossiê contra estas regras."
+        ],
+        "exemplo": "memorando"
+      },
+      "entregar": {
+        "uso": "entregar",
+        "resumo": "envia o dossiê à jornalista",
+        "explicacao": [
+          "Precisa estar desconectado e com todas as lacunas preenchidas.",
+          "Se faltar algo, ela diz o que falhou e você pode corrigir e reenviar."
+        ],
+        "exemplo": "entregar"
+      },
+      "rede": {
+        "uso": "rede",
+        "resumo": "mostra os nós conhecidos",
+        "explicacao": [
+          "Nós revelados, abertos e onde você está."
+        ],
+        "exemplo": "rede"
+      },
+      "help": {
+        "uso": "help [comando]",
+        "resumo": "este manual",
+        "explicacao": [
+          "Sem argumento, lista tudo. Com um comando, explica em detalhe."
+        ],
+        "exemplo": "help login"
+      },
+      "sair": {
+        "uso": "sair",
+        "resumo": "fecha o jogo",
+        "explicacao": [
+          "O progresso deste protótipo não é salvo."
+        ],
+        "exemplo": "sair"
+      }
+    }
+  },
+  "dicas": {
+    "documento": "Termos entre [colchetes] podem ir para o caderno: coletar <termo>.",
+    "coletado": "Termos do caderno preenchem os fatos: fatos para ver as lacunas, preencher <fato> <lacuna> <termo>.",
+    "sondagem": "Um nó com login pede usuário e senha. Releia os documentos em busca de pistas antes de arriscar.",
+    "minigame": "Responda com pin <código>. Cada PIN errado custa ruído.",
+    "baixado": "Documentos no pendrive viram provas. Antes de entregar, cubra inocentes com: ocultar <doc> <nome>.",
+    "aviso_rastros": "Use limpar em cada nó para apagar rastros, ou digite disconnect de novo para sair assim mesmo.",
+    "lacuna_preenchida": "Quando todos os fatos estiverem completos, desconecte e use: entregar.",
+    "parecer_recusado": "Corrija o que a jornalista apontou e entregue de novo. Você pode voltar à rede se faltar prova.",
+    "lockdown": "O ruído passou do limite. A rede reiniciou: planeje o caminho antes de agir."
   }
 }

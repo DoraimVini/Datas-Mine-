@@ -130,6 +130,11 @@ static func validar_caso(caso: Dictionary) -> Array:
 					aparece = true
 			if not aparece:
 				erros.append("fato %s: a resposta '%s' não aparece em nenhum documento (impossível)" % [f, t])
+		for isca in fato.get("iscas", []):
+			if not termos.has(isca):
+				erros.append("fato %s: isca '%s' não existe" % [f, isca])
+			elif isca in fato["respostas"].values():
+				erros.append("fato %s: isca '%s' é também uma resposta" % [f, isca])
 		if fato["provas"].is_empty():
 			erros.append("fato %s: sem documentos de prova" % f)
 		for d in fato["provas"]:

@@ -211,6 +211,18 @@
     "carlos_menezes": {
       "rotulo": "Carlos Menezes",
       "tipo": "pessoa"
+    },
+    "valor_120k": {
+      "rotulo": "R$ 120.000,00",
+      "tipo": "valor"
+    },
+    "data_adiantamento": {
+      "rotulo": "14/02/2026",
+      "tipo": "data"
+    },
+    "data_assinatura": {
+      "rotulo": "02/03/2026",
+      "tipo": "data"
     }
   },
   "documentos": {
@@ -306,18 +318,22 @@
         "",
         "Data          | Fornecedor             | Valor            | Situação",
         "[10/01/2025]  | [Nutri Bom Alimentos]  | [R$ 96.000,00]   | encerrado (contrato anterior)",
+        "[14/02/2026]  | [Nutri Bem Ltda]       | [R$ 120.000,00]  | ESTORNADO (adiantamento sem contrato)",
         "[14/03/2026]  | [Nutri Bem Ltda]       | [R$ 480.000,00]  | PAGO ✔",
         "",
         "Obs.: aumento aprovado pela Secretaria. Não questionar.",
-        "Lançado por: estagiária [Bianca Reis]"
+        "Lançamentos conferidos por: [Lúcia Prado] · Lançado por: estagiária [Bianca Reis]"
       ],
       "termos": [
         "data_2025",
         "nutri_bom",
         "valor_96k",
+        "data_adiantamento",
+        "valor_120k",
         "data_pagamento",
         "nutri_bem",
         "valor_480k",
+        "lucia_prado",
         "bianca_reis"
       ],
       "revela_nos": [],
@@ -338,6 +354,7 @@
         "",
         "VALOR GLOBAL: [R$ 480.000,00] (quatrocentos e oitenta mil reais), parcela única.",
         "Dispensa de licitação justificada por \"urgência\".",
+        "Contrato assinado em [02/03/2026], com vigência de 12 meses.",
         "",
         "Pagamento autorizado em [14/03/2026] por:",
         "  ______________________________",
@@ -351,7 +368,8 @@
         "valor_480k",
         "data_pagamento",
         "antonio_souza",
-        "joana_alves"
+        "joana_alves",
+        "data_assinatura"
       ],
       "revela_nos": [],
       "inocentes": [
@@ -399,8 +417,11 @@
       "iscas": [
         "lucia_prado",
         "valor_96k",
+        "valor_120k",
         "nutri_bom",
-        "data_2025"
+        "data_2025",
+        "data_adiantamento",
+        "data_assinatura"
       ],
       "provas": [
         "doc5",

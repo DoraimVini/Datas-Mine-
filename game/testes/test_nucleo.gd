@@ -337,6 +337,13 @@ func test_host_sem_diferenciar_maiusculas() -> void:
 	afirmar(tem_evento(r["eventos"], "sondagem"))
 
 
+func test_iscas_novas_sao_recusadas() -> void:
+	for troca in [["quanto", "valor_120k"], ["quando", "data_adiantamento"], ["quando", "data_assinatura"], ["quem", "lucia_prado"]]:
+		var e := _estado_vitoria_antes_de_entregar()
+		e["fatos"]["fato1"][troca[0]] = troca[1]
+		igual(Editorial.avaliar(e, caso)["fatos"][0]["status"], "incorreto", "isca %s:" % troca[1])
+
+
 func test_r_do_cifrao_so_vale_para_valores() -> void:
 	igual(Util.achar_termo(caso, ["rogerio"], "ogério"), "")
 	igual(Util.achar_termo(caso, ["rogerio"], "Rogério"), "rogerio")
