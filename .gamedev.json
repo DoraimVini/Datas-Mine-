@@ -10,10 +10,10 @@
   "retros": "02 - Projetos/Retros",
   "codigo": "game",
   "engine": "Godot 4.7 (GDScript, renderizador Compatibility)",
-  "marco": "conceito",
+  "marco": "prototipo",
   "comandos": {
-    "teste": null,
+    "teste": "C:/Users/werne/Ferramentas/Godot/Godot_v4.7.2-stable_win64_console.exe --headless --path game -s res://testes/executar.gd",
     "build": null,
-    "dev": null
+    "dev": "C:/Users/werne/Ferramentas/Godot/Godot_v4.7.2-stable_win64_console.exe --headless --path game -s res://prototipo_texto/console.gd"
   }
 }

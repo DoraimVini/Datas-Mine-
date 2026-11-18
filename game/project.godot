@@ -1,0 +1,28 @@
+; Datas_Mine! — projeto Godot 4.7
+; Renderizador Compatibility obrigatório (GPU do PC de desenvolvimento não tem Vulkan). Ver decisão 0004.
+
+config_version=5
+
+[application]
+
+config/name="Datas_Mine!"
+config/description="Hacktivista entrega à imprensa um esquema de corrupção, caso a caso."
+config/features=PackedStringArray("4.7", "GL Compatibility")
+
+[autoload]
+
+Jogo="*res://app/jogo.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[internationalization]
+
+locale/fallback="pt_BR"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

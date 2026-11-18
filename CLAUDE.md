@@ -11,7 +11,7 @@ Projeto do segundo cérebro `Game_dev_IA`. As regras gerais vêm do `CLAUDE.md` 
 - **Idioma do jogo:** PT-BR, com todo texto visível em arquivos de dados (decisão 0003)
 - **Decisões:** `02 - Projetos/Decisões/` (`NNNN - título.md`)
 - **Retros:** `02 - Projetos/Retros/`
-- **Código:** projeto Godot em `game/` (ainda não criado)
+- **Código:** projeto Godot em `game/` (veja `game/README.md`). Protótipo de texto em `game/prototipo_texto/console.gd`. Testes: `.gamedev.json → comandos.teste` (rodar antes de todo commit de código)
 
 ## Regras específicas
 - **Godot 4.7 + GDScript, renderizador Compatibility** (decisão 0004). Este PC tem uma GPU sem Vulkan: nunca mude para Forward+/Mobile.
