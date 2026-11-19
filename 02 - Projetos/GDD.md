@@ -138,6 +138,7 @@ Rotina de dias no trabalho, relógio em tempo real, dinheiro, redes procedurais,
 5. ~~Linguagem ou engine~~: decidida, Godot 4.7 + GDScript ([[0004 - Engine e linguagem - Godot 4.7 com GDScript]]).
 
 ## Histórico
+- 2026-11-19: **Interface gráfica do caso 1** (ADR 0008): ÉterOS com janelas arrastáveis, 7 apps, HUD de ruído e Exposição, termos clicáveis, lacunas como menus, notificações e dicas. Os playtests podem usar o console ou a interface (os dois gravam log).
 - 2026-11-18: Iscas mais fortes no caso 1 (adiantamento estornado, data de assinatura × data de pagamento, quem conferiu × quem autorizou) e o manual `/help` com dicas de primeiro uso.
 - 2026-11-18: **Revisão do protótipo (qa-reviewer).** Decisões aplicadas: `limpar` por nó custa 10; os nós privados trancam ao sair; o lockdown só acontece ao passar do orçamento; entra o comando `revelar`; os nomes de prova passam a valer por fato.
 - 2026-11-18: **Primeiro playtest** do caso 1, em texto ([[2026-11-18 - Caso 1 em texto (Vini)]]). Diversão confirmada: "fez anotar pistas e nomes". O PIN e as iscas ficaram fáceis demais. Entram a regra do nome lido, o aviso de rastros e o tutorial contextual. Conteúdo em [[Caso 1 - A Merenda de Vila Serena]].

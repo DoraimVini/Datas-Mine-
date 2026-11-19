@@ -161,12 +161,21 @@ Cada sistema é um **módulo de funções puras**. Nenhum guarda estado escondid
 ```
 res://
 ├── nucleo/        ← regras puras (testáveis sem cena)
-├── app/           ← autoload Jogo, carregamento de conteúdo, save
-├── ui/            ← cenas e temas (apresentação)
-├── conteudo/      ← JSON dos casos e textos PT-BR
-├── audio/ · arte/
-└── testes/
+├── app/           ← autoload Jogo (+ log de playtest), sessão, conteúdo, parser de comandos, telemetria
+├── ui/            ← apresentação (ADR 0008)
+│   ├── Desktop.tscn · desktop.gd     ÉterOS: ícones, barra de tarefas com HUD, notificações, modo --captura
+│   ├── janela/                       janela arrastável genérica
+│   ├── apps/                         Rede · Arquivos · Caderno · Dossiê · Pendrive · Chat · Manual
+│   │                                 (cena + app_*.gd = cola provisória, trocável por .torch)
+│   ├── ponte_jogo.gd                 repassa os sinais do Jogo para a cena (para os grafos)
+│   ├── tema/tema.gd · mensagens.gd · doc_render.gd
+├── prototipo_texto/   ← console (outra "casca" sobre o mesmo núcleo)
+├── addons/orchestrator/  ← plugin de visual scripting (só binários Windows)
+├── conteudo/      ← casos JSON + textos (console.json, interface.json)
+└── testes/        ← executor próprio (detecta erros de script via Logger) + testes de núcleo, app, conteúdo e UI
 ```
+
+**Fluxo de um app:** `PonteJogo/Jogo.estado_mudou` → `atualizar()` lê `Jogo.estado()` e redesenha. Um clique monta um comando → `Jogo.executar(cmd)` → o núcleo devolve eventos → `Jogo.evento` alimenta as notificações (Desktop) e as reações específicas (por exemplo, o Chat mostra o parecer).
 
 ---
 
@@ -271,6 +280,7 @@ Como o núcleo é determinístico, um **cenário é só uma lista de comandos**.
 | [[0005 - Visual scripting híbrido com Orchestrator\|0005]] | Visual scripting híbrido: núcleo em GDScript, apresentação em Orchestrator | aceita |
 | [[0006 - Formato do conteúdo - JSON por caso\|0006]] | Formato do conteúdo: um JSON por caso + textos em JSON | aceita |
 | [[0007 - Núcleo funcional, comandos e testes próprios\|0007]] | Núcleo funcional com comandos + executor de testes próprio | aceita |
+| [[0008 - Interface - SO fictício com janelas arrastáveis\|0008]] | Interface: ÉterOS, janelas próprias, apps como cenas trocáveis por grafos | aceita |
 
 ---
 
@@ -326,6 +336,7 @@ Como o núcleo é determinístico, um **cenário é só uma lista de comandos**.
 - **Fix Your Timestep!** (Glenn Fiedler): https://gafferongames.com/post/fix_your_timestep/
 
 ## Histórico
+- 2026-11-19: v0.3. Interface gráfica (ADR 0008): estrutura `ui/`, fluxo dos apps, parser compartilhado, log no autoload Jogo, executor de testes que detecta erros de script.
 - 2026-11-18: **Implementada no protótipo de texto** (`game/`): núcleo em `nucleo/`, aplicação em `app/`, conteúdo do caso 1 em JSON, console em `prototipo_texto/`, 22 testes passando. ADRs 0006 e 0007 aceitas.
 - 2026-11-18: v0.2. Tecnologia definida (ADR 0004: Godot 4.7 + GDScript + Compatibility). Seção 5.4 de mapeamento, implantação e riscos atualizados.
 - 2026-11-18: v0.1. Primeira versão independente da tecnologia (arc42 + C4), escrita antes da ADR 0004 (linguagem).
