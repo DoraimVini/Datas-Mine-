@@ -22,7 +22,8 @@
       "bloqueado": "fechado",
       "por_nome": "nome lido em documento"
     },
-    "prefixo_dica": "💡 "
+    "prefixo_dica": "💡 ",
+    "log_salvo": "(registro do playtest salvo em: {caminho})"
   },
   "eventos": {
     "ruido": "Ruído +{custo}  →  {total} / {orcamento}",

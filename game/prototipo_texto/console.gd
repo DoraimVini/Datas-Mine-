@@ -1,21 +1,33 @@
 # Protótipo de texto: joga o caso no terminal, sem interface gráfica.
 # É só uma "casca" de apresentação sobre o núcleo: traduz texto -> comando e evento -> texto.
-# Uso: godot --headless --path game -s res://prototipo_texto/console.gd [-- caso1]
+# Uso: godot --headless --path game -s res://prototipo_texto/console.gd [-- <caso> <jogador>]
+#   ex.: ... -- caso1 P01   → grava o log do playtest como P01 (padrão: caso1, anonimo)
 extends SceneTree
 
 const Sessao := preload("res://app/sessao.gd")
 const Conteudo := preload("res://app/conteudo.gd")
 const Dossie := preload("res://nucleo/dossie.gd")
+const Telemetria := preload("res://app/telemetria.gd")
+
+const PASTA_LOGS := "user://playtests"
 
 var sessao := Sessao.new()
 var t: Dictionary = {}
 var caso: Dictionary = {}
+
+# Telemetria do playtest (só a casca registra; o núcleo não sabe de nada disso).
+var jogador := "anonimo"
+var _inicio_ms := 0
+var _registros: Array = []  # {t, comando, eventos}
+var _consultas := {}  # comandos locais usados (help, caderno, fatos...): quantas vezes
 
 
 func _init() -> void:
 	t = Conteudo.carregar_json("res://conteudo/textos/console.json")
 	var args := OS.get_cmdline_user_args()
 	var id_caso: String = args[0] if args.size() > 0 else "caso1"
+	if args.size() > 1:
+		jogador = args[1]
 	var erros := sessao.iniciar(id_caso)
 	if not erros.is_empty():
 		for e in erros:
@@ -23,9 +35,38 @@ func _init() -> void:
 		quit(1)
 		return
 	caso = sessao.caso
+	_inicio_ms = Time.get_ticks_msec()
 	_intro()
 	_loop()
+	_gravar_log()
 	quit(0)
+
+
+func _segundos() -> float:
+	return (Time.get_ticks_msec() - _inicio_ms) / 1000.0
+
+
+## Grava em user://playtests/<data>_<jogador>_<caso>.json os comandos, os eventos e as métricas.
+func _gravar_log() -> void:
+	DirAccess.make_dir_recursive_absolute(PASTA_LOGS)
+	var carimbo := Time.get_datetime_string_from_system(false, true).replace(":", "-").replace(" ", "_")
+	var caminho := "%s/%s_%s_%s.json" % [PASTA_LOGS, carimbo, jogador, caso["id"]]
+	var dados := {
+		"jogador": jogador,
+		"data": Time.get_datetime_string_from_system(false, true),
+		"metricas": Telemetria.metricas(caso, _registros, sessao.estado, {
+			"consultas": _consultas,
+			"dicas_vistas": _dicas_vistas.keys(),
+			"duracao_total_s": int(_segundos()),
+		}),
+		"registros": _registros,
+	}
+	var f := FileAccess.open(caminho, FileAccess.WRITE)
+	if f == null:
+		return
+	f.store_string(JSON.stringify(dados, "  "))
+	f.close()
+	print(_fmt(t["rotulos"]["log_salvo"], {"caminho": ProjectSettings.globalize_path(caminho)}))
 
 
 var _buffer := ""
@@ -78,6 +119,11 @@ func _processar(linha: String) -> void:
 	var p := linha.split(" ", false)
 	var verbo := p[0].to_lower().trim_prefix("/")  # aceita "/help", "/scan"...
 	var resto := linha.substr(linha.find(" ") + 1).strip_edges() if p.size() > 1 else ""
+	if verbo in ["ajuda", "help", "?", "caderno", "fatos", "pendrive", "rede", "memorando"]:
+		var chave := "help" if verbo in ["ajuda", "?"] else verbo
+		if chave == "help" and resto != "":
+			chave = "help " + resto.to_lower()
+		_consultas[chave] = _consultas.get(chave, 0) + 1
 	match verbo:
 		"ajuda", "help", "?": _ajuda(resto.to_lower().trim_prefix("/"))
 		"caderno": _caderno()
@@ -139,7 +185,9 @@ var _dicas_vistas := {}  # tutorial contextual: cada dica aparece só na primeir
 
 
 func _exec(cmd: Dictionary) -> void:
-	for e in sessao.executar(cmd):
+	var eventos := sessao.executar(cmd)
+	_registros.append({"t": snappedf(_segundos(), 0.1), "comando": cmd, "eventos": eventos})
+	for e in eventos:
 		_mostrar(e)
 		_dica(e["tipo"])
 	_status()
