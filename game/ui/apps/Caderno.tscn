@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ui/apps/app_caderno.gd" id="1"]
+[ext_resource type="Script" path="res://ui/ponte_jogo.gd" id="2"]
+
+[node name="Caderno" type="VBoxContainer"]
+size_flags_vertical = 3
+script = ExtResource("1")
+
+[node name="Vazio" type="Label" parent="."]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+autowrap_mode = 3
+text = "(vazio)"
+
+[node name="Lista" type="ItemList" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PonteJogo" type="Node" parent="."]
+script = ExtResource("2")

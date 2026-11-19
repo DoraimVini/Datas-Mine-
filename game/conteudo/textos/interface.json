@@ -1,0 +1,138 @@
+{
+  "so": {
+    "nome": "ÉterOS",
+    "slogan": "sistema privado · conexão anônima",
+    "usuario": "anon"
+  },
+  "apps": {
+    "rede": {
+      "titulo": "Mapa da Rede",
+      "icone": "◈"
+    },
+    "arquivos": {
+      "titulo": "Arquivos",
+      "icone": "▤"
+    },
+    "caderno": {
+      "titulo": "Caderno",
+      "icone": "✎"
+    },
+    "dossie": {
+      "titulo": "Dossiê",
+      "icone": "§"
+    },
+    "pendrive": {
+      "titulo": "Pendrive",
+      "icone": "▣"
+    },
+    "chat": {
+      "titulo": "Chat · {nome}",
+      "icone": "✉"
+    },
+    "ajuda": {
+      "titulo": "Manual",
+      "icone": "?"
+    }
+  },
+  "janela": {
+    "minimizar": "_",
+    "fechar": "×"
+  },
+  "hud": {
+    "ruido": "RUÍDO {valor}/{max}",
+    "exposicao": "EXPOSIÇÃO {valor}",
+    "conectado": "● {host}",
+    "desconectado": "○ offline"
+  },
+  "rede": {
+    "scan": "Varrer vizinhos",
+    "limpar": "Limpar rastros",
+    "disconnect": "Desconectar",
+    "sondar": "Sondar",
+    "conectar": "Conectar",
+    "login": "Login…",
+    "crack": "Crack :{porta}",
+    "voce_esta_aqui": "você está aqui",
+    "nenhum_no": "Nenhum nó conhecido.",
+    "porta": "porta {numero} · {servico} · {estado}",
+    "acesso_publico": "acesso público",
+    "acesso_login": "login na porta {porta}",
+    "acesso_pin": "trava de PIN na porta {porta}",
+    "nao_sondado": "(ainda não sondado)",
+    "estado": {
+      "publico": "público",
+      "aberto": "aberto",
+      "fechado": "fechado",
+      "por_nome": "nome lido em documento"
+    },
+    "rastro": "rastros!",
+    "login_titulo": "Login em {host}",
+    "usuario": "usuário",
+    "senha": "senha",
+    "entrar": "Entrar",
+    "cancelar": "Cancelar",
+    "pin_titulo": "{titulo}",
+    "pin_codigo": "código",
+    "pin_enviar": "Enviar PIN",
+    "crack_dica": "(sonde o nó para ver as portas)"
+  },
+  "arquivos": {
+    "offline": "Você está offline. Documentos do pendrive podem ser lidos no app Pendrive.",
+    "vazio": "Nenhum arquivo neste nó.",
+    "escolha": "Escolha um arquivo para ler.",
+    "baixar": "Baixar para o pendrive",
+    "baixado": "no pendrive ✔",
+    "dica_termos": "Clique nos termos destacados para guardá-los no caderno."
+  },
+  "caderno": {
+    "vazio": "Nenhum termo coletado ainda. Leia documentos e clique nos termos destacados.",
+    "item": "{rotulo}   ·  {tipo}"
+  },
+  "dossie": {
+    "lacuna_vazia": "— {lacuna} —",
+    "completo": "● completo",
+    "incompleto": "○ incompleto",
+    "entregar": "Entregar à jornalista",
+    "aviso_conectado": "Desconecte-se da rede antes de entregar.",
+    "nomes_lacunas": {
+      "quem": "quem",
+      "quanto": "quanto",
+      "empresa": "empresa",
+      "quando": "quando",
+      "socio": "sócio",
+      "parentesco": "parentesco"
+    }
+  },
+  "pendrive": {
+    "vazio": "Pendrive vazio. Baixe documentos no app Arquivos.",
+    "pessoas": "Pessoas citadas",
+    "ocultar": "Ocultar",
+    "revelar": "Revelar",
+    "oculto": "████████"
+  },
+  "chat": {
+    "voce": "Você",
+    "memorando": "📌 MEMORANDO · {regra}",
+    "resultado": "CASO CONCLUÍDO · {manchete}",
+    "resultado_linhas": [
+      "Força do caso ........ {forca} / {total_fatos}",
+      "Inocentes protegidos . {inocentes_protegidos} / {inocentes_total}",
+      "Ruído final .......... {ruido}",
+      "Exposição ............ {exposicao}"
+    ]
+  },
+  "ajuda": {
+    "intro": "Na interface, os comandos viram botões e cliques. O manual abaixo vale também para o terminal (que chega nos próximos casos)."
+  },
+  "dicas": {
+    "documento": "Termos destacados no texto podem ir para o caderno: clique neles.",
+    "coletado": "Abra o Dossiê e escolha os termos do caderno em cada lacuna.",
+    "sondagem": "Nós com login pedem usuário e senha; com trava de PIN, um quebra-cabeça. Releia os documentos em busca de pistas.",
+    "minigame": "Deduza o PIN pelas regras. Cada PIN errado custa ruído.",
+    "baixado": "Documentos no pendrive viram provas. Antes de entregar, cubra inocentes no app Pendrive.",
+    "aviso_rastros": "Use Limpar rastros em cada nó, ou clique em Desconectar de novo para sair assim mesmo.",
+    "lacuna_preenchida": "Com todos os fatos completos, desconecte e entregue no Dossiê.",
+    "parecer_recusado": "Corrija o que a jornalista apontou e entregue de novo.",
+    "lockdown": "O ruído passou do limite. A rede reiniciou: planeje antes de agir."
+  }
+}

@@ -36,6 +36,22 @@ func test_conta_erros_e_iscas() -> void:
 	afirmar(not m["concluido"])
 
 
+func test_jogo_salva_log_no_mesmo_formato_do_console() -> void:
+	var j: Node = arvore.root.get_node("Jogo")
+	j.iniciar_caso("caso1")
+	j.jogador = "TESTE_AUTOMATICO"
+	j.executar({"tipo": "scan"})
+	var caminho: String = j.salvar_log()
+	afirmar(caminho != "" and FileAccess.file_exists(caminho), "log não foi salvo")
+	var dados = JSON.parse_string(FileAccess.get_file_as_string(caminho))
+	for k in ["jogador", "data", "metricas", "registros"]:
+		afirmar(dados.has(k), "log sem '%s'" % k)
+	igual(dados["metricas"]["interface"], "gui")
+	igual(dados["registros"].size(), 1)
+	DirAccess.remove_absolute(caminho)
+	j.jogador = "anonimo"
+
+
 func test_partida_vazia_nao_quebra() -> void:
 	var s := Sessao.new()
 	s.iniciar("caso1")

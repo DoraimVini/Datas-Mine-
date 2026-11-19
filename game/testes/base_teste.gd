@@ -3,6 +3,7 @@ extends RefCounted
 
 var falhas: Array = []
 var _teste_atual := ""
+var arvore: SceneTree  # definida pelo executor (acesso a root e autoloads nos testes de interface)
 
 
 func _falhar(msg: String) -> void:

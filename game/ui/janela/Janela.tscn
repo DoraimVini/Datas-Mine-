@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/janela/janela.gd" id="1"]
+
+[node name="Janela" type="PanelContainer"]
+offset_right = 480.0
+offset_bottom = 360.0
+mouse_filter = 0
+script = ExtResource("1")
+
+[node name="Corpo" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Barra" type="PanelContainer" parent="Corpo"]
+layout_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 13
+
+[node name="Linha" type="HBoxContainer" parent="Corpo/Barra"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Titulo" type="Label" parent="Corpo/Barra/Linha"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+text = "Janela"
+
+[node name="Minimizar" type="Button" parent="Corpo/Barra/Linha"]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+focus_mode = 0
+text = "_"
+
+[node name="Fechar" type="Button" parent="Corpo/Barra/Linha"]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+focus_mode = 0
+text = "×"
+
+[node name="Conteudo" type="MarginContainer" parent="Corpo"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10

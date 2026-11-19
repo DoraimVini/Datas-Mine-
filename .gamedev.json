@@ -2,7 +2,10 @@
   "projeto": "Datas_Mine!",
   "genero": "Simulador de hacker",
   "playbook": "Gêneros/Simulador de hacker.md",
-  "playbooks_extras": ["Gêneros/Jogo de dedução e investigação.md", "Gêneros/Jogo de inspeção de documentos.md"],
+  "playbooks_extras": [
+    "Gêneros/Jogo de dedução e investigação.md",
+    "Gêneros/Jogo de inspeção de documentos.md"
+  ],
   "repo": "https://github.com/DoraimVini/Datas-Mine-",
   "gdd": "02 - Projetos/GDD.md",
   "arquitetura": "02 - Projetos/Arquitetura.md",
@@ -12,8 +15,9 @@
   "engine": "Godot 4.7 (GDScript, renderizador Compatibility)",
   "marco": "prototipo",
   "comandos": {
-    "teste": "C:/Users/werne/Ferramentas/Godot/Godot_v4.7.2-stable_win64_console.exe --headless --path game -s res://testes/executar.gd",
+    "teste": "powershell -ExecutionPolicy Bypass -File game/testes/rodar.ps1",
     "build": null,
-    "dev": "C:/Users/werne/Ferramentas/Godot/Godot_v4.7.2-stable_win64_console.exe --headless --path game -s res://prototipo_texto/console.gd"
+    "dev": "C:/Users/werne/Ferramentas/Godot/Godot_v4.7.2-stable_win64.exe --path game",
+    "console": "C:/Users/werne/Ferramentas/Godot/Godot_v4.7.2-stable_win64_console.exe --headless --path game -s res://prototipo_texto/console.gd"
   }
 }

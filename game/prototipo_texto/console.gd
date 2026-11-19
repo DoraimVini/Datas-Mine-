@@ -8,6 +8,9 @@ const Sessao := preload("res://app/sessao.gd")
 const Conteudo := preload("res://app/conteudo.gd")
 const Dossie := preload("res://nucleo/dossie.gd")
 const Telemetria := preload("res://app/telemetria.gd")
+const Parser := preload("res://app/parser.gd")
+const Argumentos := preload("res://app/argumentos.gd")
+const Textos := preload("res://app/textos.gd")
 
 const PASTA_LOGS := "user://playtests"
 
@@ -24,10 +27,9 @@ var _consultas := {}  # comandos locais usados (help, caderno, fatos...): quanta
 
 func _init() -> void:
 	t = Conteudo.carregar_json("res://conteudo/textos/console.json")
-	var args := OS.get_cmdline_user_args()
-	var id_caso: String = args[0] if args.size() > 0 else "caso1"
-	if args.size() > 1:
-		jogador = args[1]
+	var args := Argumentos.ler(OS.get_cmdline_user_args())
+	var id_caso: String = args["caso"]
+	jogador = args["jogador"]
 	var erros := sessao.iniciar(id_caso)
 	if not erros.is_empty():
 		for e in erros:
@@ -116,69 +118,24 @@ func _loop() -> void:
 # ---------------- entrada ----------------
 
 func _processar(linha: String) -> void:
-	var p := linha.split(" ", false)
-	var verbo := p[0].to_lower().trim_prefix("/")  # aceita "/help", "/scan"...
-	var resto := linha.substr(linha.find(" ") + 1).strip_edges() if p.size() > 1 else ""
-	if verbo in ["ajuda", "help", "?", "caderno", "fatos", "pendrive", "rede", "memorando"]:
-		var chave := "help" if verbo in ["ajuda", "?"] else verbo
-		if chave == "help" and resto != "":
-			chave = "help " + resto.to_lower()
-		_consultas[chave] = _consultas.get(chave, 0) + 1
-	match verbo:
-		"ajuda", "help", "?": _ajuda(resto.to_lower().trim_prefix("/"))
-		"caderno": _caderno()
-		"fatos": _fatos()
-		"pendrive": _pendrive()
-		"rede": _rede()
-		"scan", "ls", "limpar", "disconnect", "entregar":
-			_exec({"tipo": verbo})
-		"memorando": print(_fmt(t["rotulos"]["memorando"], {"regra": caso["memorando"]}))
-		"probe", "connect":
-			if _faltam(p, 2, verbo):
-				return
-			_exec({"tipo": verbo, "no": p[1]})
-		"login":
-			if _faltam(p, 4, verbo):
-				return
-			_exec({"tipo": "login", "no": p[1], "usuario": p[2], "senha": p[3]})
-		"crack":
-			if _faltam(p, 3, verbo):
-				return
-			_exec({"tipo": "crack", "no": p[1], "porta": int(p[2])})
-		"pin":
-			if _faltam(p, 2, verbo):
-				return
-			_exec({"tipo": "pin", "codigo": resto})
-		"read", "download":
-			if _faltam(p, 2, verbo):
-				return
-			_exec({"tipo": verbo, "doc": p[1].to_lower()})
-		"coletar":
-			if _faltam(p, 2, verbo):
-				return
-			_exec({"tipo": "coletar", "termo": resto})
-		"preencher":
-			if _faltam(p, 4, verbo):
-				return
-			_exec({"tipo": "preencher", "fato": p[1].to_lower(), "lacuna": p[2], "termo": " ".join(p.slice(3))})
-		"limpar-lacuna":
-			if _faltam(p, 3, verbo):
-				return
-			_exec({"tipo": "limpar_lacuna", "fato": p[1].to_lower(), "lacuna": p[2]})
-		"ocultar", "revelar":
-			if _faltam(p, 3, verbo):
-				return
-			_exec({"tipo": verbo, "doc": p[1].to_lower(), "nome": " ".join(p.slice(2))})
+	var r := Parser.analisar(linha)
+	match r["tipo"]:
+		"comando":
+			_exec(r["cmd"])
+		"local":
+			var chave: String = r["verbo"] + ((" " + r["arg"]) if r["verbo"] == "help" and r["arg"] != "" else "")
+			_consultas[chave] = _consultas.get(chave, 0) + 1
+			match r["verbo"]:
+				"help": _ajuda(r["arg"])
+				"caderno": _caderno()
+				"fatos": _fatos()
+				"pendrive": _pendrive()
+				"rede": _rede()
+				"memorando": print(_fmt(t["rotulos"]["memorando"], {"regra": caso["memorando"]}))
+		"uso":
+			_uso(t["manual"]["comandos"].get(r["verbo"], {}).get("uso", r["verbo"]))
 		_:
 			print(_fmt(t["erros"]["comando_desconhecido"], {}))
-
-
-## Mostra o uso correto (texto em console.json → usos) e devolve true se faltarem partes.
-func _faltam(partes: PackedStringArray, minimo: int, verbo: String) -> bool:
-	if partes.size() < minimo:
-		_uso(t["manual"]["comandos"].get(verbo, {}).get("uso", verbo))
-		return true
-	return false
 
 
 var _dicas_vistas := {}  # tutorial contextual: cada dica aparece só na primeira vez
@@ -368,12 +325,7 @@ func _ajuda(comando: String) -> void:
 
 
 func _texto_custo(c: Dictionary) -> String:
-	var txt := str(int(caso["custos"][c["custo"]]))
-	if c.has("custo_rotulo"):
-		txt += " " + c["custo_rotulo"]
-	if c.has("custo_erro"):
-		txt += " (erro: %d)" % int(caso["custos"][c["custo_erro"]])
-	return txt
+	return Textos.custo_do_comando(c, caso["custos"])
 
 
 func _caderno() -> void:
